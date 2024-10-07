@@ -8,8 +8,8 @@
       include_role:
         name: redhat.rhel_system_roles.cockpit
       vars:
-        cockpit_packages: default
-        #cockpit_packages: minimal
+        #cockpit_packages: default
+        cockpit_packages: minimal
         #cockpit_packages: full
         cockpit_enabled: yes
         cockpit_started: yes
