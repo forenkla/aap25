@@ -10,7 +10,7 @@
 
   rules:
     - name: Web console is down
-      condition: event.status == "failed" and event.url == "https://aap25.containersarelinux.net:9090"
+      condition: event.url_check.status == "down"
       action:
         run_job_template:
           name: "Enable Web Console on RHEL"
