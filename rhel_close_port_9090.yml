@@ -7,6 +7,7 @@
     - name: Close Firewall port 9090
       ansible.posix.firewalld:
         service: cockpit
+        zone: public
         permanent: yes
         immediate: yes
         state: absent
