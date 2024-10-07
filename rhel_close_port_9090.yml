@@ -9,4 +9,4 @@
         port: 9090
         permanent: yes
         immediate: yes
-        state: disable
+        state: disabled
