@@ -5,7 +5,7 @@
 
   tasks:
     - name: Close Firewall port 9090
-      community.general.firewalld:
+      firewalld:
         service: cockpit
         permanent: yes
         immediate: yes
