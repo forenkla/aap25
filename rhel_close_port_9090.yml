@@ -7,7 +7,6 @@
     - name: Close Firewall port 9090
       community.general.firewalld:
         service: cockpit
-        zone: public
         permanent: yes
         immediate: yes
-        state: absent
+        state: disabled
