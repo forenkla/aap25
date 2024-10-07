@@ -1,0 +1,19 @@
+---
+- name: Monitor AAP URL and execute job template
+  hosts: localhost
+  sources:
+    - ansible.eda.url_check:
+        urls:
+          - http://aap25.containersarelinux.net:9090  # URL to monitor
+        delay: 60                 # Frequency of checks (in seconds)
+        status_codes: [200]       # HTTP status code indicating the site is up
+
+  rules:
+    - name: Web console is down
+      condition: event.status == "failed" and event.url == "http://aap25.containersarelinux.net:9090"
+      action:
+        run_job_template:
+          name: "Enable Web Console on RHEL"
+          organization: "Default"  # Specify the organization name if applicable
+          extra_vars:              # Add any additional variables if required for the job
+            target_url: "aap25.containersarelinux.net:9090"
