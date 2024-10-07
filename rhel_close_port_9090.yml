@@ -8,5 +8,6 @@
       ansible.posix.firewalld:
         port: 9090/tcp
         permanent: yes
+        zone: public
         immediate: yes
         state: absent
