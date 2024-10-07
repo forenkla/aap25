@@ -16,4 +16,4 @@
           name: "Enable Web Console on RHEL"
           organization: "Default"  # Specify the organization name if applicable
           extra_vars:              # Add any additional variables if required for the job
-            target_url: "aap25.containersarelinux.net:9090"
+            vm_name: "aap25.containersarelinux.net"
