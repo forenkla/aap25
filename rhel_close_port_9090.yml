@@ -1,0 +1,12 @@
+---
+- name: "Close port 9090"
+  hosts: "aap25.containersarelinux.net"
+  become: yes
+
+  tasks:
+    - name: Close Firewall port 9090
+      firewalld:
+        port: 9090
+        permanent: yes
+        immediate: yes
+        state: disable
