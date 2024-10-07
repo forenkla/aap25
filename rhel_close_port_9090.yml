@@ -6,8 +6,7 @@
   tasks:
     - name: Close Firewall port 9090
       ansible.posix.firewalld:
-        port: 9090/tcp
+        service: cockpit
         permanent: yes
-        zone: public
         immediate: yes
         state: absent
