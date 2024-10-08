@@ -4,9 +4,8 @@
   sources:
     - ansible.eda.url_check:
         urls:
-          - https://aap25.containersarelinux.net:9090  # URL to monitor
+          - https://192.168.67.8:9090  # URL to monitor
         delay: 15                 # Frequency of checks (in seconds)
-        status_codes: 503
 
   rules:
     - name: Web console is down
