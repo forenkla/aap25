@@ -6,7 +6,6 @@
         urls:
           - https://aap25.containersarelinux.net:9090  # URL to monitor
         delay: 60                 # Frequency of checks (in seconds)
-        status_codes: [200]       # HTTP status code indicating the site is up
 
   rules:
     - name: Web console is down
