@@ -5,7 +5,7 @@
     - ansible.eda.url_check:
         urls:
           - https://aap25.containersarelinux.net:9090  # URL to monitor
-        delay: 60                 # Frequency of checks (in seconds)
+        delay: 15                 # Frequency of checks (in seconds)
 
   rules:
     - name: Web console is down
