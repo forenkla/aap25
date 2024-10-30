@@ -1,0 +1,19 @@
+---
+- name: Log ansible.cfg path and configuration details
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Check if ansible-config command is available
+      ansible.builtin.command: ansible-config dump --only-changed
+      register: config_details
+      ignore_errors: yes
+
+    - name: Log ansible.cfg path and custom settings if available
+      ansible.builtin.debug:
+        msg: "{{ config_details.stdout_lines | default('No custom configurations detected or ansible-config not available.') }}"
+      when: config_details is defined
+
+    - name: Fail if ansible-config dump is unavailable
+      ansible.builtin.fail:
+        msg: "Unable to retrieve ansible.cfg details; 'ansible-config' command might not be available in this environment."
+      when: config_details is not defined
