@@ -4,8 +4,10 @@
   gather_facts: no
   tasks:
     - name: Check if ansible-config command is available
-      ansible.builtin.command: ansible-config dump --only-changed --no-color
+      ansible.builtin.command: ansible-config dump --only-changed
       register: config_details
+      environment:
+        ANSIBLE_FORCE_COLOR: "false"
       ignore_errors: yes
 
     - name: Log ansible.cfg path and custom settings if available
