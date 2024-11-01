@@ -6,5 +6,5 @@
   tasks:
     - name: Stop the Cockpit service
       ansible.builtin.service:
-        name: cockpit
+        name: cockpit.socket
         state: stopped
