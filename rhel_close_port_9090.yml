@@ -4,9 +4,7 @@
   become: yes
 
   tasks:
-    - name: Close Firewall port 9090
-      firewalld:
-        service: cockpit
-        permanent: yes
-        immediate: yes
-        state: disabled
+    - name: Stop the Cockpit service
+      ansible.builtin.service:
+        name: cockpit
+        state: stopped
