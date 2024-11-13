@@ -1,0 +1,20 @@
+---
+- name: Install and start apache
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Ensure the httpd package is installed
+	  ansible.builtin.package:
+  	    name: httpd
+  	    state: present
+
+    - name: Create the index.html file
+      ansible.builtin.template:
+        src: files/index.html
+        dest: /var/www/html/
+
+    - name: Start the httpd service if needed
+      ansible.builtin.service:
+        name: httpd
+        state: started
