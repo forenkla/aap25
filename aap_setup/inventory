@@ -44,8 +44,8 @@ bundle_dir='/home/jboivie/ansible-automation-platform-containerized-setup-bundle
 postgresql_admin_username=postgres
 postgresql_admin_password='redhat'
 
-registry_username=jboivie-redhat
-registry_password='xxxxxxxxxx'
+registry_username= '{{ registry_username }}'
+registry_password= '{{ registry_password }}'
 
 redis_mode=standalone
 
