@@ -1,0 +1,19 @@
+---
+- name: Listen for events on a webhook from host1
+  hosts: all
+  sources:
+    - name: Listen for alerts from host1
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 4999
+
+  rules:
+    - name: Curl command 1
+      condition: event.payload.event_title == "Curl command 1"
+      action:
+        run_workflow_template:
+          name: "Ping"
+          organization: "Default"
+          job_args:
+            extra_vars:
+              vm_name: "{{ event.payload.hostname }}"
