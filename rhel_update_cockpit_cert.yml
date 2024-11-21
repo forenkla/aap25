@@ -1,0 +1,44 @@
+---
+- name: Update RHEL Cockpit to use Let's Encrypt Certificates
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure Cockpit certificate directory exists
+      file:
+        path: /etc/cockpit/ws-certs.d
+        state: directory
+        owner: root
+        group: cockpit-ws
+        mode: '0750'
+
+    - name: Copy the Let's Encrypt fullchain certificate
+      copy:
+        src: /home/jboivie/certs/fullchain.pem
+        dest: /etc/cockpit/ws-certs.d/letsencrypt.crt
+        owner: root
+        group: cockpit-ws
+        mode: '0640'
+
+    - name: Copy the Let's Encrypt private key
+      copy:
+        src: /home/jboivie/certs/privkey.pem
+        dest: /etc/cockpit/ws-certs.d/letsencrypt.key
+        owner: root
+        group: cockpit-ws
+        mode: '0640'
+
+    - name: Restart the Cockpit service
+      systemd:
+        name: cockpit
+        state: restarted
+        enabled: true
+
+    - name: Verify Cockpit is running
+      uri:
+        url: https://localhost:9090
+        validate_certs: false
+      register: cockpit_status
+
+    - name: Debug Cockpit verification response
+      debug:
+        msg: "{{ cockpit_status }}"
