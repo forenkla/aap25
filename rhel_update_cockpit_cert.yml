@@ -3,14 +3,6 @@
   hosts: all
   become: true
   tasks:
-    - name: Ensure Cockpit certificate directory exists
-      file:
-        path: /etc/cockpit/ws-certs.d
-        state: directory
-        owner: root
-        group: cockpit-ws
-        mode: '0750'
-
     - name: Copy the Let's Encrypt fullchain certificate
       copy:
         src: /home/jboivie/certs/fullchain.pem
