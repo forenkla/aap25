@@ -8,7 +8,7 @@
         src: /etc/pki/ca-trust/fullchain.pem
         dest: /etc/cockpit/ws-certs.d/letsencrypt.crt
         owner: root
-        group: cockpit-ws
+        group: cockpit-wsinstance
         mode: '0640'
 
     - name: Copy the Let's Encrypt private key
@@ -16,7 +16,7 @@
         src: /etc/pki/ca-trust/privkey.pem
         dest: /etc/cockpit/ws-certs.d/letsencrypt.key
         owner: root
-        group: cockpit-ws
+        group: cockpit-wsinstance
         mode: '0640'
 
     - name: Restart the Cockpit service
