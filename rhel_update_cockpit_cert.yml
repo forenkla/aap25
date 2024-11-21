@@ -5,7 +5,7 @@
   tasks:
     - name: Copy the Let's Encrypt fullchain certificate
       copy:
-        src: /usr/share/certs/fullchain.pem
+        src: /etc/pki/ca-trust/fullchain.pem
         dest: /etc/cockpit/ws-certs.d/letsencrypt.crt
         owner: root
         group: cockpit-ws
@@ -13,7 +13,7 @@
 
     - name: Copy the Let's Encrypt private key
       copy:
-        src: /usr/share/certs/privkey.pem
+        src: /etc/pki/ca-trust/privkey.pem
         dest: /etc/cockpit/ws-certs.d/letsencrypt.key
         owner: root
         group: cockpit-ws
