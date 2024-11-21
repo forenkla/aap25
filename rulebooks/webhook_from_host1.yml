@@ -11,7 +11,7 @@
     - name: Curl command 1
       condition: event.payload.event_title == "Curl command 1"
       action:
-        run_workflow_template:
+        run_job_template:
           name: "Ping"
           organization: "Default"
           job_args:
