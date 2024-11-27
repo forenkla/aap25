@@ -3,9 +3,9 @@
   hosts: all
   execution_strategy: parallel
   sources:
-    - name: Listen for alerts from Red Hat Insights
-      ansible.eda.webhook:
-        port: 5002
+    - redhat.insights_eda.insights:
+        host: 0.0.0.0
+        port: 5000
 
   rules:
     - name: Remediate Red Hat Insights Advisory with Ansible
