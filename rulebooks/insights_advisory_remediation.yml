@@ -1,0 +1,23 @@
+---
+- name: Listen to Advisories from Red Hat Insights
+  hosts: all
+  execution_strategy: parallel
+  sources:
+    - name: Listen for alerts from Red Hat Insights
+      ansible.eda.webhook:
+        port: 5002
+
+  rules:
+    - name: Remediate Red Hat Insights Advisory with Ansible
+      condition: event.payload is defined and event.payload.event_type == 'new-advisory'
+      actions:
+        - debug:
+        - run_job_template:
+            name: "Remediate Insights Advisories"
+            organization: Default
+            job_args:
+              extra_vars:
+                insights_adv_type: "{{ event.payload.event_type }}"
+                insights_adv_data: "{{ event.payload.events }}"
+                insights_adv_host_data: "{{ event.payload.context }}"
+                insights_adv_target_host: "{{ event.payload.context.display_name }}"
