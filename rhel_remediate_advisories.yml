@@ -23,3 +23,86 @@
           - "advisory_name: {{ item.advisory_name }}"
           - "advisory_type:  {{ item.advisory_type }}"
       loop: "{{ hosts_with_adv }}"
+
+
+    - name: Create a list of advisories
+      no_log: true
+      ansible.builtin.uri:
+        url: "https://console.redhat.com/api/patch/v3/advisories/{{ item.advisory_name }}"
+        method: GET
+        return_content: true
+        user: "{{ cred_user }}"
+        password: "{{ cred_pw }}"
+        force_basic_auth: true
+        status_code: 200
+      register: insights_cves
+      loop: "{{ hosts_with_adv }}"
+      delegate_to: localhost
+
+
+    - name: Create a list for each host with CVEs
+      ansible.builtin.set_fact:
+        hosts_with_cve: "{{ hosts_with_cve | default([]) + [{'hostname': insights_adv_host_data.display_name,
+                                        'insights_id': insights_adv_host_data.inventory_id,
+                                        'advisory_id': item.json.data.id,
+                                        'cves': item.json.data.attributes.cves,
+                                        'advisory_type_name': item.json.data.attributes.advisory_type_name,
+                                        'severity': item.json.data.attributes.severity,
+                                        'description': item.json.data.attributes.description}] }}"
+      loop: "{{ insights_cves.results }}"
+      delegate_to: localhost
+      when: item.json.data.attributes.cves | length > 0
+
+
+    - name: Create a list of security CVEs with severity >= 3
+      ansible.builtin.set_fact:
+        cve_list: "{{ cve_list | default([]) + item.cves }}"
+      loop: "{{ hosts_with_cve | default([]) }}"
+      delegate_to: localhost
+      when:
+        - item.severity | int >= 3
+        - item.advisory_type_name == 'security'
+        - hosts_with_cve is defined
+
+    - name: If there are in fact any CVEs that are security and with a severity >= 3
+      when:
+        - cve_list is defined
+        - hosts_with_cve is defined
+      block:
+        - name: Print out the total number of security CVEs with severity >= 3 for host "{{ insights_adv_target_host }}"
+          ansible.builtin.debug:
+            msg: "Detected {{ cve_list | unique | length }} security CVEs with severity >= 3 for host {{ insights_adv_target_host }}"
+          delegate_to: localhost
+
+        - name: Generate playbooks in Insights to remediate vulnerabilities
+          ansible.builtin.uri:
+            url: "https://console.redhat.com/api/remediations/v1/remediations"
+            method: POST
+            user: "{{ cred_user }}"
+            password: "{{ cred_pw }}"
+            validate_certs: false
+            force_basic_auth: true
+            status_code: 201
+            return_content: true
+            headers:
+              Content-Type: "application/json"
+              accept: "text/vnd.yaml"
+              Connection: "keep-alive"
+            body_format: json
+            body: "{{ lookup('ansible.builtin.template', 'templates/pb_generator_body.j2') }}"
+          register: pbs_per_host
+          loop: "{{ cve_list | unique }}"
+          delegate_to: localhost
+
+        - name: Launch a project update from Red Hat Insights
+          ansible.controller.project_update:
+            project: "Red Hat Insights"
+            timeout: 60
+            validate_certs: false
+          delegate_to: localhost
+
+        # - name: Perform remediation tasks using AAP
+        #   ansible.builtin.include_tasks: remediation.yml
+        #   loop: "{{ cve_list | unique }}"
+        #   loop_control:
+        #     index_var: my_idx
