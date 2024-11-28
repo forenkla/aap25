@@ -65,8 +65,8 @@
       loop: "{{ hosts_with_cve | default([]) }}"
       delegate_to: localhost
       when:
-        - item.severity | int >= 3
-        - item.advisory_type_name == 'security'
+      #  - item.severity | int >= 3
+      #  - item.advisory_type_name == 'security'
         - hosts_with_cve is defined
 
     - name: If there are in fact any CVEs that are security and with a severity >= 3
