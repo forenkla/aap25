@@ -26,7 +26,7 @@
 
 
     - name: Create a list of advisories
-      no_log: true
+      #no_log: true
       ansible.builtin.uri:
         url: "https://console.redhat.com/api/patch/v3/advisories/{{ item.advisory_name }}"
         method: GET
