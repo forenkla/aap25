@@ -14,11 +14,6 @@
       loop: "{{ insights_adv_data }}"
       delegate_to: localhost
 
-    - name: Keep only the first item in hosts_with_adv
-      ansible.builtin.set_fact:
-        hosts_with_adv: "{{ [hosts_with_adv[0]] }}"
-      when: hosts_with_adv | length > 0
-
     - name: Debug message
       ansible.builtin.debug:
         msg:
