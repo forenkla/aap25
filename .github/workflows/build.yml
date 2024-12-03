@@ -28,7 +28,7 @@ jobs:
 
     - name: Build the container
       run: |
-        podman build -t quay.io/jboivieredhat/ansible-local-dev:latest -f Devcontainer/Containerfile .
+        podman build -t quay.io/jboivieredhat/ansible-local-dev:latest -f ./Devcontainer/Containerfile .
 
     - name: Push the container to Quay.io
       run: |
