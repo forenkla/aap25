@@ -24,12 +24,12 @@ jobs:
 
     - name: Log in to Quay.io
       run: |
-        echo "${{ secrets.REDHAT_PASSWORD }}" | podman login quay.io --username ${{ secrets.REDHAT_USERNAME }} --password-stdin
+        echo "${{ secrets.REDHAT_PASSWORD }}" | podman login quay.io --username ${{ secrets.QUAY_USERNAME }} --password-stdin
 
     - name: Build the container
       run: |
-        podman build -t quay.io/jboivie-redhat/ansible-local-dev:latest -f Devcontainer/Containerfile .
+        podman build -t quay.io/jboivieredhat/ansible-local-dev:latest -f Devcontainer/Containerfile .
 
     - name: Push the container to Quay.io
       run: |
-        podman push quay.io/jboivie-redhat/ansible-local-dev:latest
+        podman push quay.io/jboivieredhat/ansible-local-dev:latest
