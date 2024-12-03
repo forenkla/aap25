@@ -1,0 +1,16 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      path: ansible.cfg
+  editor:
+    command: vi
+  execution-environment:
+    container-engine: podman
+    enabled: true
+    image: aap25.containersarelinux.net/ansible-automation-platform-24/ee-supported-rhel9
+  logging:
+    append: true
+    level: info
+  playbook-artifact:
+    enable: true
