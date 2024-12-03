@@ -1,7 +1,7 @@
 {
     "name": "ansible-dev-container-podman",
     "image": "quay.io/jboivieredhat/ansible-local-dev:latest",
-    "containerUser": "root",
+    "containerUser": "devansible",
     "runArgs": [
       "--cap-add=CAP_MKNOD",
       "--cap-add=NET_ADMIN",
