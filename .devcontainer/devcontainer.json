@@ -1,6 +1,6 @@
 {
     "name": "ansible-dev-container-podman",
-    "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
+    "image": "quay.io/jboivieredhat/ansible-local-dev:latest",
     "containerUser": "root",
     "runArgs": [
       "--cap-add=CAP_MKNOD",
