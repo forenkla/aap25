@@ -7,7 +7,7 @@ on:
     paths:
       - 'Devcontainer/**' # Trigger only when files in the Devcontainer folder change
   workflow_dispatch: # Allow manual triggering of the workflow
-  
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -20,11 +20,11 @@ jobs:
 
     - name: Log in to Red Hat Container Registry
       run: |
-        echo "${{ secrets.REDHAT_USERNAME }}:${{ secrets.REDHAT_PASSWORD }}" | podman login registry.redhat.io --username ${{ secrets.REDHAT_USERNAME }} --password-stdin
+        echo "${{ secrets.REDHAT_PASSWORD }}" | podman login registry.redhat.io --username ${{ secrets.REDHAT_USERNAME }} --password-stdin
 
     - name: Log in to Quay.io
       run: |
-        echo "${{ secrets.REDHAT_USERNAME }}:${{ secrets.REDHAT_PASSWORD }}" | podman login quay.io --username ${{ secrets.QUAY_USERNAME }} --password-stdin
+        echo "${{ secrets.REDHAT_USERNAME }}:${{ secrets.REDHAT_PASSWORD }}" | podman login quay.io --username ${{ secrets.REDHAT_USERNAME }} --password-stdin
 
     - name: Build the container
       run: |
