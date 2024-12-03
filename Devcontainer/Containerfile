@@ -1,16 +1,15 @@
 # Use the Red Hat Ansible Dev Tools base image
 FROM registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
 
-# Create a new user named devansible
+# Switch to root to create a new user
+USER root
 RUN useradd -m -s /bin/bash devansible
 
-# Switch to the new user
+# Switch back to non-root user (if required by the base image)
 USER devansible
 
-# Set work directory
+# Set working directory
 WORKDIR /home/devansible
-
-# Optional: Add any additional setup commands or files here
 
 # Default command
 CMD ["/bin/bash"]
