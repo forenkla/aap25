@@ -5,7 +5,7 @@ FROM registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:l
 USER root
 
 # Add the custom MOTD
-RUN echo "Welcome to this nice custom Devcontainer for Ansible" > /etc/motd
+RUN echo "This is a demo for Tech Update..." > /etc/motd
 
 # Optionally set the working directory
 WORKDIR /root
