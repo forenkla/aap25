@@ -1,26 +1,11 @@
+# Use the base image
 FROM registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
 
-# Switch to root to add the user and configure the environment
-USER root
+# Add the custom MOTD
+RUN echo "Welcome to this nice custom Devcontainer for Ansible" > /etc/motd
 
-# Add devansible user and ensure they have a home directory
-RUN useradd -m -s /bin/bash devansible
+# Optionally set the working directory
+WORKDIR /root
 
-# Set ownership of the workspace directory (predefined path)
-# Replace "/workspace" with your intended workspace mount path
-RUN mkdir -p /workspace && \
-    chown -R devansible:devansible /workspace
-
-# Copy a default .bashrc for devansible
-RUN cp /etc/skel/.bashrc /home/devansible/.bashrc && \
-    chown devansible:devansible /home/devansible/.bashrc
-
-# Set the default user and working directory
-USER devansible
-WORKDIR /workspace
-
-# Ensure the user has necessary privileges for the mounted workspace
-RUN echo "export PATH=/usr/local/bin:\$PATH" >> /home/devansible/.bashrc
-
-# Switch back to default CMD
+# Set the entry point (default behavior)
 CMD ["/bin/bash"]
