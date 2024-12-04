@@ -55,4 +55,4 @@ jobs:
           -H "Content-Type: application/json" \
           -H "X-Hub-Signature-256: sha256=$SIGNATURE" \
           -d "$PAYLOAD" \
-          "$ {{ secrets.WEBHOOK_URL }}"
+          "${{ secrets.WEBHOOK_URL }}"
