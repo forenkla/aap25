@@ -1,0 +1,18 @@
+---
+- name: Listen for events from Github Actions
+  hosts: all
+  sources:
+    - name: Listen for alerts from host1
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5432
+
+  rules:
+    - name: Devcontainer pushed to quay.io
+      condition: event.payload.event == "container_pushed"
+      action:
+        run_workflow_template:
+          name: "Sync new Devcontainer"
+          organization: Default
+          job_args:
+            extra_vars: "{{ event.payload }}"
