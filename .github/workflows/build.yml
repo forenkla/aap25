@@ -54,4 +54,4 @@ jobs:
           -H "Content-Type: application/json" \
           -H "X-Hub-Signature-256: sha256=$SIGNATURE" \
           -d "$PAYLOAD" \
-          https://aap25.containersarelinux.net:443/eda-event-streams/api/eda/v1/external_event_stream/8fcc7877-5009-49b0-afa0-a2f7bda34e65/post/
+          "$ {{ secrets.WEBHOOK_URL }}"
