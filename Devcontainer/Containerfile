@@ -1,6 +1,9 @@
 # Use the base image
 FROM registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
 
+# Switch to root user to modify system files
+USER root
+
 # Add the custom MOTD
 RUN echo "Welcome to this nice custom Devcontainer for Ansible" > /etc/motd
 
