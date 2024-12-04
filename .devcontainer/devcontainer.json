@@ -1,6 +1,7 @@
 {
     "name": "ansible-dev-container-podman",
     "image": "aap25.containersarelinux.net/ansible-local-dev:latest",
+    "update": "always",
     "containerUser": "root",
     "runArgs": [
       "--cap-add=CAP_MKNOD",
