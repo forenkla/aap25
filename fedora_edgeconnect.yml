@@ -33,7 +33,7 @@
         name: "{{ edgeconnect_container_name }}"
         image: "{{ edgeconnect_image }}"
         state: started
-        restart: always
+        restart_policy: always
         mounts:
           - type: bind
             source: "{{ edgeconnect_yaml_dest }}"
