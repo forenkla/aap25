@@ -1,0 +1,7 @@
+name: "{{ edgeconnect_name }}"
+api_endpoint_host: "{{ edgeconnect_api_endpoint_host }}"
+oauth:
+  client_id: "{{ edgeconnect_client_id }}"
+  client_secret: "{{ edgeconnect_client_secret }}"
+  resource: "{{ edgeconnect_resource }}"
+  endpoint: "https://sso-sprint.dynatracelabs.com/sso/oauth2/token"

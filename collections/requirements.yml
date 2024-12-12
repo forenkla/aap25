@@ -4,3 +4,7 @@ collections:
     version: 4.6.2
   - name: ansible.hub
     version: 1.0.0
+  - name: containers.podman
+    version: 1.16.2
+  - name: fedora.linux_system_roles
+    version: 1.92.1

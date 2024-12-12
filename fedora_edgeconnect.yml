@@ -1,0 +1,43 @@
+---
+- name: Deploy Dynatrace EdgeConnect
+  hosts: fedora.containersarelinux.net
+  become: true
+  collections:
+    - containers.podman
+    - fedora.linux_system_roles
+
+  vars:
+    edgeconnect_image: "dynatrace/edgeconnect"
+    edgeconnect_yaml_template: "/path/to/templates/edgeConnect.yaml.j2"
+    edgeconnect_yaml_dest: "{{ ansible_env.PWD }}/edgeConnect.yaml"
+    edgeconnect_container_name: "dynatrace-edgeconnect"
+
+  tasks:
+    - name: Pull the EdgeConnect container image
+      containers.podman.podman_image:
+        name: "{{ edgeconnect_image }}"
+        state: present
+
+    - name: Apply the EdgeConnect configuration template
+      ansible.builtin.template:
+        src: "{{ edgeconnect_yaml_template }}"
+        dest: "{{ edgeconnect_yaml_dest }}"
+        mode: '0644'
+
+    - name: Set SELinux context on the configuration file
+      fedora.linux_system_roles.selinux:
+        type_changes:
+          - path: "{{ edgeconnect_yaml_dest }}"
+            type: "container_file_t"
+
+    - name: Run the EdgeConnect container
+      containers.podman.podman_container:
+        name: "{{ edgeconnect_container_name }}"
+        image: "{{ edgeconnect_image }}"
+        state: started
+        restart: always
+        mounts:
+          - type: bind
+            source: "{{ edgeconnect_yaml_dest }}"
+            target: "/edgeConnect.yaml"
+        detach: true
