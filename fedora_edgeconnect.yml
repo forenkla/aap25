@@ -34,5 +34,5 @@
         image: "{{ edgeconnect_image }}"
         state: started
         restart_policy: always
-        mount: "type=bind,source={{ edgeconnect_yaml_dest }}=/edgeConnect.yaml"
+        mount: "type=bind,source={{ edgeconnect_yaml_dest }},destination=/edgeConnect.yaml"
         detach: true
