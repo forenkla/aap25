@@ -4,7 +4,6 @@
   become: true
   collections:
     - containers.podman
-    - fedora.linux_system_roles
 
   vars:
     edgeconnect_image: "dynatrace/edgeconnect"
@@ -25,11 +24,10 @@
         mode: '0644'
 
     - name: Set SELinux context on the configuration file
-      fedora.linux_system_roles.selinux:
-        type_changes:
-          - path: "{{ edgeconnect_yaml_dest }}"
-            type: "container_file_t"
-
+      ansible.builtin.file:
+        path: "{{ edgeconnect_yaml_dest }}"
+        setype: container_file_t
+    
     - name: Run the EdgeConnect container
       containers.podman.podman_container:
         name: "{{ edgeconnect_container_name }}"
