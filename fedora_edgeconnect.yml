@@ -8,7 +8,7 @@
   vars:
     edgeconnect_image: "docker.io/dynatrace/edgeconnect"
     edgeconnect_yaml_template: "edgeConnect.j2"
-    edgeconnect_yaml_dest: "{{ ansible_env.PWD }}/edgeConnect.yaml"
+    edgeconnect_yaml_dest: "/home/jboivie/edgeConnect.yaml"
     edgeconnect_container_name: "dynatrace-edgeconnect"
 
   tasks:
