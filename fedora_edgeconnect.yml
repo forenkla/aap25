@@ -28,11 +28,14 @@
         path: "{{ edgeconnect_yaml_dest }}"
         setype: container_file_t
     
+    - debug:
+        msg: "type=bind,src={{ edgeconnect_yaml_dest }},dst=/edgeConnect.yaml"
+
     - name: Run the EdgeConnect container
       containers.podman.podman_container:
         name: "{{ edgeconnect_container_name }}"
         image: "{{ edgeconnect_image }}"
         state: started
         restart_policy: always
-        mount: "type=bind,source={{ edgeconnect_yaml_dest }},destination=/edgeConnect.yaml"
+        mount: "type=bind,src={{ edgeconnect_yaml_dest }},dst=/edgeConnect.yaml"
         detach: true
