@@ -10,4 +10,4 @@
         controller_username: "{{ cred_user }}"
         controller_password: "{{ cred_pw }}"
         project: "AAP2.5 public"
-        timeout: 10
+        wait: False
