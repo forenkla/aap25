@@ -5,10 +5,10 @@
   tasks:
 
     - name: Debug payload
-      ansible.builtin.payload:
+      ansible.builtin.debug:
         msg: "{{ event.payload }}"
 
-        
+
     - name: Sync Project
       ansible.controller.project_update:
         controller_host: aap25.containersarelinux.net
