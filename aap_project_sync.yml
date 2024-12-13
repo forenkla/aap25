@@ -27,7 +27,7 @@
 
     - name: Display project name
       debug:
-        msg: "The project name for scm_url '{{ scm_url }}' is '{{ matched_project.name }}'"
+        msg: "The project name for scm_url '{{ repository.url }}' is '{{ matched_project.name }}'"
       when: matched_project is defined
 
 
