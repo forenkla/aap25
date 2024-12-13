@@ -16,6 +16,7 @@
         url_password: "{{ cred_pw }}"
         return_content: yes
         validate_certs: no
+        force_basic_auth: true
       register: project_data
 
     - name: Parse and find project by scm_url
