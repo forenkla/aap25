@@ -1,0 +1,41 @@
+name: Notify AAP of repo update
+
+on:
+  push:
+    branches:
+      - main # Replace with your branch name if needed
+
+jobs:
+  send-webhook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Webhook to AAP Event Stream
+        run: |
+          # Prepare the payload and secret
+          PAYLOAD='{"event": "repository_updated",
+            "repository": {
+              "name": "${{ github.repository }}",
+              "url": "https://github.com/${{ github.repository }}"
+            },
+            "commit": {
+              "id": "${{ github.sha }}",
+              "message": "${{ github.event.head_commit.message }}",
+              "author": "${{ github.event.head_commit.author.name }}"
+            },
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }'
+          SECRET="${{ secrets.WEBHOOK_SECRET }}"
+          
+          # Compute the HMAC signature
+          SIGNATURE=$(echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SECRET" | awk '{print $2}')
+
+          # Call the webhook for AAP 2.5
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-Hub-Signature-256: sha256=$SIGNATURE" \
+            -d "$PAYLOAD" \
+             "${{ secrets.WEBHOOK_URL }}"
