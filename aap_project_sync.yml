@@ -8,6 +8,27 @@
       ansible.builtin.debug:
         msg: "{{ event }} {{ repository.name }} {{ repository.url }}"
 
+    - name: Fetch project data with basic auth
+      uri:
+        url: "https://aap25.containersarelinux.net/api/controller/v2/projects/"
+        method: GET
+        url_username: "{{ cred_user }}"
+        url_password: "{{ cred_pw }}"
+        return_content: yes
+        validate_certs: no
+      register: project_data
+
+    - name: Parse and find project by scm_url
+      set_fact:
+        matched_project: "{{ item }}"
+      with_items: "{{ project_data.json.results }}"
+      when: item.scm_url == "{{ repository.url }}"
+
+    - name: Display project name
+      debug:
+        msg: "The project name for scm_url '{{ scm_url }}' is '{{ matched_project.name }}'"
+      when: matched_project is defined
+
 
     - name: Sync Project
       ansible.controller.project_update:
