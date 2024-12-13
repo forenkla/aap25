@@ -11,8 +11,8 @@
     - name: Github repo updated
       condition: event.payload.event == "repository_updated"
       action:
-        run_workflow_template:
-          name: "Sync new Devcontainer"
+        run_job_template:
+          name: "Sync AAP Project"
           organization: Default
           job_args:
             extra_vars: "{{ event.payload }}"
