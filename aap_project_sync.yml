@@ -6,7 +6,7 @@
 
     - name: Debug payload
       ansible.builtin.debug:
-        msg: "{{ event.payload }}"
+        msg: "{{ event }} {{ repository.name }} {{ repository.url }}"
 
 
     - name: Sync Project
