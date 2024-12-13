@@ -23,7 +23,7 @@
       set_fact:
         matched_project: "{{ item }}"
       with_items: "{{ project_data.json.results }}"
-      when: item.scm_url == "{{ repository.url }}"
+      when: item.scm_url == repository.url
 
     - name: Display project name
       debug:
