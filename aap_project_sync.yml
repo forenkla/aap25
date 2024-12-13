@@ -36,5 +36,5 @@
         controller_host: aap25.containersarelinux.net
         controller_username: "{{ cred_user }}"
         controller_password: "{{ cred_pw }}"
-        project: "AAP2.5 public"
+        project: "{{ matched_project.name }}"
         wait: true
