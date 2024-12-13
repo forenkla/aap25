@@ -16,18 +16,7 @@ jobs:
       - name: Webhook to AAP Event Stream
         run: |
           # Prepare the payload and secret
-          PAYLOAD='{"event": "repository_updated",
-            "repository": {
-              "name": "${{ github.repository }}",
-              "url": "https://github.com/${{ github.repository }}"
-            },
-            "commit": {
-              "id": "${{ github.sha }}",
-              "message": "${{ github.event.head_commit.message }}",
-              "author": "${{ github.event.head_commit.author.name }}"
-            },
-            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-          }'
+          PAYLOAD='{"event": "repository_updated","repository": {"name": "${{ github.repository }}","url": "https://github.com/${{ github.repository }}"},"commit": {"id": "${{ github.sha }}","message": "${{ github.event.head_commit.message }}","author": "${{ github.event.head_commit.author.name }}"}}'
           SECRET="${{ secrets.WEBHOOK_SECRET }}"
           
           # Compute the HMAC signature
