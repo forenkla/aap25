@@ -1,0 +1,13 @@
+---
+- name: "Sync AAP Project"
+  hosts: localhost
+  gather_facts: false
+  tasks:
+
+    - name: Sync Project
+      ansible.controller.project_update:
+        controller_host: aap25.containersarelinux.net
+        controller_username: "{{ cred_user }}"
+        controller_password: "{{ cred_pw }}"
+        project: "AAP2.5 public"
+        timeout: 10

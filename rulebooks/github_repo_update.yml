@@ -1,0 +1,18 @@
+---
+- name: Listen for repo update from Gtihub
+  hosts: all
+  sources:
+    - name: Listen for alerts from Github
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5432
+
+  rules:
+    - name: Github repo updated
+      condition: event.payload.event == "repository_updated"
+      action:
+        run_workflow_template:
+          name: "Sync new Devcontainer"
+          organization: Default
+          job_args:
+            extra_vars: "{{ event.payload }}"
