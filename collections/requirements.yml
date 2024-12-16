@@ -8,3 +8,5 @@ collections:
     version: 1.16.2
   - name: fedora.linux_system_roles
     version: 1.92.1
+  - name: infra.aap_configuration
+    version: latest
