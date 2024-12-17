@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'Devcontainer/**' # Trigger only when files in the Devcontainer folder change
+      - 'Devcontainer/**'
       - '.github/workflows/build.yml'
       - 'rulebooks/github_webook.yml'
-  workflow_dispatch: # Allow manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -26,6 +26,11 @@ jobs:
         sudo apt update
         sudo apt install -y podman
 
+    - name: Install QEMU for cross-architecture support
+      run: |
+        sudo apt update
+        sudo apt install -y qemu-user-static
+
     - name: Log in to Red Hat Container Registry
       run: |
         echo "${{ secrets.REDHAT_PASSWORD }}" | podman login registry.redhat.io --username ${{ secrets.REDHAT_USERNAME }} --password-stdin
@@ -34,9 +39,9 @@ jobs:
       run: |
         echo "${{ secrets.REDHAT_PASSWORD }}" | podman login quay.io --username ${{ secrets.QUAY_USERNAME }} --password-stdin
 
-    - name: Build the container
+    - name: Build the container for arm64
       run: |
-        podman build -t quay.io/jboivieredhat/ansible-local-dev:latest -f ./Devcontainer/Containerfile ./Devcontainer
+        podman build --platform linux/arm64 -t quay.io/jboivieredhat/ansible-local-dev:latest -f ./Devcontainer/Containerfile ./Devcontainer
 
     - name: Push the container to Quay.io
       run: |
@@ -44,14 +49,9 @@ jobs:
 
     - name: Call Webhook with HMAC
       run: |
-        # Prepare the payload and secret
         PAYLOAD='{"event":"container_pushed","image":"quay.io/jboivieredhat/ansible-local-dev:latest"}'
         SECRET="${{ secrets.WEBHOOK_SECRET }}"
-
-        # Compute the HMAC signature
         SIGNATURE=$(echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SECRET" | awk '{print $2}')
-
-        # Call the webhook for AAP 2.5
         curl -X POST \
           -H "Content-Type: application/json" \
           -H "X-Hub-Signature-256: sha256=$SIGNATURE" \
