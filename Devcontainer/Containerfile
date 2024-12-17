@@ -5,7 +5,7 @@ FROM registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:l
 USER root
 
 # Add the custom MOTD
-RUN echo "Welcome to Tech Update #5" > /etc/motd
+RUN echo "Welcome to Tech Update #6" > /etc/motd
 
 # Optionally set the working directory
 WORKDIR /root
