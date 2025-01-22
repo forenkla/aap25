@@ -15,10 +15,12 @@
       "label=disable",
       "--security-opt",
       "apparmor=unconfined",
+      "--userns=host",
       "--security-opt",
       "unmask=/sys/fs/cgroup",
-      "--userns=host",
-      "--hostname=ansible-dev-container"
+      "--hostname=ansible-dev-container",
+      "--network=host",
+      "--privileged"
     ],
     "customizations": {
       "vscode": {
@@ -26,3 +28,4 @@
       }
     }
   }
+ 

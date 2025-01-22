@@ -11,6 +11,7 @@
         group: cockpit-wsinstance
         mode: '0640'
 
+    # Make sure this is the path
     - name: Copy the Let's Encrypt private key
       copy:
         src: /etc/pki/ca-trust/privkey.pem
