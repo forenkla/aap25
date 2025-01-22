@@ -17,7 +17,7 @@
       servicenow.itsm.incident_info:
         number: INC0008111
       register: result
-    - name: Query the incident table for the latest incident
+
 
 
     - name: Display the latest incident details
