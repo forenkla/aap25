@@ -1,0 +1,35 @@
+---
+- name: Retrieve the latest incident from the ServiceNow incident table
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - servicenow.itsm
+
+  vars:
+    table_name: "incident"  # ServiceNow table to query
+    query_params:           # Additional query parameters if needed
+      active: true          # Example filter: only active incidents
+    order_by: "sys_created_on"  # Sort by creation time
+    limit: 1                    # Limit results to one record
+
+  tasks:
+    - name: Query the incident table for the latest incident
+      servicenow.itsm.table_info:
+        instance: "{{ servicenow_instance }}"
+        username: "{{ servicenow_username }}"
+        password: "{{ servicenow_password }}"
+        table: "{{ table_name }}"
+        query: "{{ query_params }}"
+        order: "desc"            # Order results in descending order
+        order_by: "{{ order_by }}"
+        limit: "{{ limit }}"
+      register: result
+
+    - name: Display the latest incident details
+      debug:
+        var: result.records
+
+    - name: Display the short description of the latest incident
+      debug:
+        msg: "Latest Incident: {{ result.records[0].short_description }}"
+      when: result.records | length > 0
