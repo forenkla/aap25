@@ -13,17 +13,12 @@
     limit: 1                    # Limit results to one record
 
   tasks:
-    - name: Query the incident table for the latest incident
-      servicenow.itsm.table_info:
-        instance: "{{ servicenow_instance }}"
-        username: "{{ servicenow_username }}"
-        password: "{{ servicenow_password }}"
-        table: "{{ table_name }}"
-        query: "{{ query_params }}"
-        order: "desc"            # Order results in descending order
-        order_by: "{{ order_by }}"
-        limit: "{{ limit }}"
+    - name: Retrieve incidents by number
+      servicenow.itsm.incident_info:
+        number: INC0008111
       register: result
+    - name: Query the incident table for the latest incident
+
 
     - name: Display the latest incident details
       debug:
