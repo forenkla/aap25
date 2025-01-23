@@ -17,7 +17,6 @@
     - debug:
         var: result
         verbosity: 1
-    - pause:
     - servicenow.itsm.configuration_item:
         sys_id: "{{ item.sys_id }}"
         state: absent
