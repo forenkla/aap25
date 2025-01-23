@@ -2,6 +2,10 @@
   gather_facts: false
   tasks:
     - servicenow.itsm.configuration_item_info:
+        instance:
+          host: {{ SN_HOST }}
+          username: {{ SN_USERNAME }}
+          password: {{ SN_PASSWORD }}
         sys_class_name: cmdb_ci_server
  #       query:
  #         - os: = Linux Red Hat
