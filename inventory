@@ -3,3 +3,4 @@ host1.containersarelinux.net ansible_host=192.168.67.11
 host2.containersarelinux.net ansible_host=192.168.67.12
 fedora.containersarelinux.net ansible_host=192.168.67.14
 powerbook.containersarelinux.net ansible_host=192.168.67.1
+localhost ansible_connection=local
