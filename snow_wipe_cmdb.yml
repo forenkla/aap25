@@ -2,10 +2,6 @@
 - name: Wipe the CMDB tables in ServiceNow Dev instance
   hosts: localhost
   gather_facts: false
-  vars:
-    servicenow_instance: "{{ SN_HOST }}"
-    servicenow_username: "{{ SN_USERNAME }}"
-    servicenow_password: "{{ SN_PASSWORD }}"
 
   tasks:
     - servicenow.itsm.configuration_item_info:
