@@ -1,0 +1,15 @@
+---
+- name: Retrieve Webserver from ServiceNow demo environment
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - servicenow.itsm
+
+    - name: Retrieve a specific configuration item by name
+      servicenow.itsm.configuration_item_info:
+        name: P1000892
+        register: result
+    
+    - name: Display the latest incident details
+      debug:
+        var: result.records
