@@ -8,7 +8,7 @@
     - name: Retrieve a specific configuration item by name
       servicenow.itsm.configuration_item_info:
         name: P1000892
-        register: result
+      register: result
     
     - name: Display the latest incident details
       debug:
