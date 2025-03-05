@@ -22,7 +22,7 @@
       set_stats:
         data:
           ansible_extra_vars:
-            resource_group_name: "{{ result.records.asset_tag }}"
+            resource_group_name: "{{ result.records[0].asset_tag }}"
 
     - name: Display the Config Item details
       debug:
