@@ -15,7 +15,7 @@
   tasks:
     - name: Retrieve a specific configuration item by name
       servicenow.itsm.configuration_item_info:
-        name: "{{ my-configuration-item }}"
+        name: "{{ my_configuration_item }}"
       register: result
 
     - name: Display the Config Item details
