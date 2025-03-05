@@ -5,13 +5,6 @@
   collections:
     - servicenow.itsm
 
-  vars:
-    table_name: "incident"  # ServiceNow table to query
-    query_params:           # Additional query parameters if needed
-      active: true          # Example filter: only active incidents
-    order_by: "sys_created_on"  # Sort by creation time
-    limit: 1                    # Limit results to one record
-
   tasks:
     - name: Retrieve a specific configuration item by name
       servicenow.itsm.configuration_item_info:
