@@ -13,14 +13,10 @@
     limit: 1                    # Limit results to one record
 
   tasks:
-    - name: Update a configuration item
-      servicenow.itsm.configuration_item:
-        sys_id: "cfc976dec3002210d09ebecdd40131df"
-        install_status: in_maintenance
-        operational_status: repair_in_progress
-        other:
-          fault_count: 1
-          classification: Development
+    - name: Retrieve a specific configuration item by name
+      servicenow.itsm.configuration_item_info:
+        name: "{{ my-configuration-item }}"
+      register: result
 
     - name: Display the Config Item details
       debug:
