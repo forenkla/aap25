@@ -18,6 +18,12 @@
         name: "{{ my_configuration_item }}"
       register: result
 
+    - name: Pass variable to next job
+      set_stats:
+        data:
+          ansible_extra_vars:
+            resource_group_name: "{{ result.records.asset_tag }}"
+
     - name: Display the Config Item details
       debug:
         var: result.records
