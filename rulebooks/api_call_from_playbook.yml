@@ -1,0 +1,16 @@
+---
+- name: Receives webhook from my playbook
+  hosts: all
+  sources:
+    - name: Listen
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 4999
+
+  rules:
+    - name: Curl command 1
+      condition: event.payload.event_title == "Curl command 1"
+      action:
+        run_job_template:
+          name: "Ping"
+          organization: "Default"
