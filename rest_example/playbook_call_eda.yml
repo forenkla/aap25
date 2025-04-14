@@ -1,0 +1,23 @@
+---
+- name: Trigger webhook with JSON payload
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Send POST request to webhook endpoint
+      uri:
+        url: https://{{ eda_server }}/eda-event-streams/api/eda/v1/external_event_stream/43d1809d-d49e-4f9d-9882-93538a581ccc/post/
+        method: POST
+        headers:
+          Authorization: "Bearer {{ playbook_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          run_this: "test.yml"
+        status_code: 200
+      register: webhook_response
+
+    - name: Show webhook response
+      debug:
+        var: webhook_response
