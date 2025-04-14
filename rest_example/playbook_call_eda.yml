@@ -14,7 +14,8 @@
           Content-Type: "application/json"
         body_format: json
         body:
-          run_this: "test.yml"
+          run_this_job_template: "{{ job_template_name }}"
+          use_this_value: "{{ job_template_value }}"
         status_code: 200
       register: webhook_response
 
