@@ -22,4 +22,3 @@
     - name: Show webhook response
       ansible.builtin.debug:
         var: webhook_response
-        
