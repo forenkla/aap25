@@ -1,0 +1,16 @@
+---
+- name: Changes in RHEL config
+  hosts: all
+  sources:
+    - name: Listen
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 4999
+
+  rules:
+    - name: Run Workflow
+      condition: 1==1
+      action:
+        run_workflow_template:
+          name: "Day 2 Maintaining RHEL"
+          organization: Default
