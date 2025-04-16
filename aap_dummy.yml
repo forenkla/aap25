@@ -1,0 +1,8 @@
+---
+- name: Configure
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Configuring
+      ansible.builtin.pause:
+        seconds: 5
