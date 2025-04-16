@@ -14,3 +14,6 @@
         run_workflow_template:
           name: "Day 2 Maintaining RHEL"
           organization: Default
+          job_args:
+            extra_vars:              # Add any additional variables if required for the job
+              test_var: "testing"
