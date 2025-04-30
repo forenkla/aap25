@@ -7,7 +7,7 @@
     - name: Start the Cockpit service
       ansible.builtin.service:
         name: cockpit.socket
-        state: enabled
+        state: started
 
     - name: Open Firewall for Web Console
       firewalld:
