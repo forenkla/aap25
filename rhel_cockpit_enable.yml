@@ -1,6 +1,6 @@
 ---
 - name: "Install System Role for Web Console"
-  hosts: "{{ vm_name }}"
+  hosts: "aap25.containersarelinux.net"
   become: yes
 
   tasks:
