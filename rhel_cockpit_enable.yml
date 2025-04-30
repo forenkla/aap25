@@ -1,11 +1,13 @@
 ---
 - name: "Install System Role for Web Console"
-  hosts: "aap25.containersarelinux.net"
+  hosts: "{{ vm_name }}"
   become: yes
 
   tasks:
-    - name: Start Cockpit via cmd
-      ansible.builtin.command: systemctl start cockpit
+    - name: Stop the Cockpit service
+      ansible.builtin.service:
+        name: cockpit.socket
+        state: started
 
     - name: Open Firewall for Web Console
       firewalld:
