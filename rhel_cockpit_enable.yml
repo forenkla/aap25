@@ -4,15 +4,10 @@
   become: yes
 
   tasks:
-    - name: Install RHEL Web Console (Cockpit)
-      include_role:
-        name: redhat.rhel_system_roles.cockpit
-      vars:
-        #cockpit_packages: default
-        cockpit_packages: minimal
-        #cockpit_packages: full
-        cockpit_enabled: yes
-        cockpit_started: yes
+    - name: Stop the Cockpit service
+      ansible.builtin.service:
+        name: cockpit.socket
+        state: started
 
     - name: Open Firewall for Web Console
       firewalld:
