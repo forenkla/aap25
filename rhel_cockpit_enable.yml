@@ -4,10 +4,8 @@
   become: yes
 
   tasks:
-    - name: Restart Cockpit service
-      ansible.builtin.systemd:
-        name: cockpit.service
-        state: started
+    - name: Start Cockpit via cmd
+      ansible.builtin.command: systemctl start cockpit
 
     - name: Open Firewall for Web Console
       firewalld:
