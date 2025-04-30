@@ -7,8 +7,8 @@
     - name: Restart Cockpit service
       ansible.builtin.systemd:
         name: cockpit.service
-        state: restarted
-        
+        state: started
+
     - name: Open Firewall for Web Console
       firewalld:
         service: cockpit
