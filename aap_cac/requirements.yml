@@ -1,0 +1,12 @@
+---
+collections:
+  - name: ansible.platform
+    source: private_automation_hub
+  - name: ansible.hub
+    source: private_automation_hub
+  - name: ansible.controller
+    source: private_automation_hub
+  - name: ansible.eda
+    source: private_automation_hub
+  - name: infra.aap_configuration
+    source: validated_automation_hub
