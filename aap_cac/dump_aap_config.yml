@@ -25,4 +25,4 @@
     - name: Export projects to file
       ansible.builtin.copy:
         content: "{{ export_results | to_nice_yaml(width=50, explicit_start=true, explicit_end=true) }}"
-        dest: projects.yaml
+        dest: ~/test_config/projects.yaml
