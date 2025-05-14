@@ -33,5 +33,5 @@
 
   tasks:
   - name: Export all assets
-    export:
+    ansible.controller.export:
       all: true
