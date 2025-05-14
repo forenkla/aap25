@@ -1,14 +1,27 @@
 ---
-- hosts: all
+- name: Export projects
+  hosts: localhost
   connection: local
   gather_facts: false
-  vars:
-    controller_username: "{{ vault_controller_username | default(lookup('env', 'CONTROLLER_USERNAME')) }}"
-    controller_password: "{{ vault_controller_password | default(lookup('env', 'CONTROLLER_PASSWORD')) }}"
-    controller_hostname: "{{ vault_controller_hostname | default(lookup('env', 'CONTROLLER_HOST')) }}"
-    controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
+  collections:
+    - ansible.controller
+  # environment:
+  #    CONTROLLER_HOST: https://localhost
+  #    CONTROLLER_USERNAME: admin
+  #    CONTROLLER_PASSWORD: password
+  #    CONTROLLER_VERIFY_SSL: false
 
   tasks:
-  - name: Export all assets
-    ansible.controller.export:
-      all: true
+    - name: Export projects
+      awx.awx.export: # or ansible.controller.export
+        projects: all
+      register: export_results
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: export_results
+
+    - name: Export projects to file
+      ansible.builtin.copy:
+        content: "{{ export_results | to_nice_yaml(width=50, explicit_start=true, explicit_end=true) }}"
+        dest: projects.yaml
