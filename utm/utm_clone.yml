@@ -1,26 +1,23 @@
 ---
-- name: Clone and start UTM VM
-  hosts: powerbook
+- name: Trigger UTM VM clone via local Swift daemon
+  hosts: localhost
+  connection: local
   gather_facts: false
 
   vars:
     new_vm_name: "ansible-vm"
 
   tasks:
-    - name: Clone, randomize MAC, start VM, return IP
-      shell: |
-        set -e
-        export PATH="/usr/local/bin:$PATH"
+    - name: Request clone from macOS UTM daemon
+      uri:
+        url: "http://192.168.67.1:5050/clone"
+        method: POST
+        body_format: json
+        body:
+          name: "{{ new_vm_name }}"
+      register: result
+      failed_when: result.status >= 400
 
-        MASTER_VM_UUID="66937242-61E8-44F7-8AE3-18F284522049"
-        NEW_VM_NAME="{{ new_vm_name }}"
-
-        utmctl clone "${MASTER_VM_UUID}" --name "${NEW_VM_NAME}"
-
-
-      register: clone_output
-      changed_when: true
-
-    - name: Show VM IP
+    - name: Show VM name and IP
       debug:
-        msg: "Cloned VM IP: {{ clone_output.stdout_lines[-1] }}"
+        msg: "VM {{ result.json.name }} created with IP {{ result.json.ip }}"
