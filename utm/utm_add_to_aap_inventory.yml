@@ -13,6 +13,7 @@
     - name: Lookup inventory ID
       ansible.controller.inventory:
         name: "{{ aap_inventory_name }}"
+        organization: "Default"
         state: list
       register: inv_info
 
