@@ -7,8 +7,8 @@
   vars:
     aap_inventory_name: "AAP25 inventory"
     aap_organization: "Default"
-    vm_name: "ansible-vm"
-    vm_ip: "192.168.67.29"
+    vm_name: ""
+    vm_ip: ""
 
   tasks:
     - name: Ensure inventory exists (retrieve ID)

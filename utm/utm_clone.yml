@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars:
-    new_vm_name: "ansible-vm"
+    new_vm_name: ""
 
   tasks:
     - name: Request clone from macOS UTM daemon
@@ -17,6 +17,12 @@
           name: "{{ new_vm_name }}"
       register: result
       failed_when: result.status >= 400
+
+    - name: Set output vars
+      set_stats:
+        data:
+          vm_name: "{{ result.json.name }}"
+          vm_ip: "{{ result.json.ip }}"
 
     - name: Show VM name and IP
       debug:
