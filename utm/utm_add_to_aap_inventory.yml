@@ -1,5 +1,5 @@
 ---
-- name: Register new UTM VM in AAP inventory
+- name: Register a VM in AAP inventory
   hosts: localhost
   connection: local
   gather_facts: false
@@ -10,20 +10,16 @@
     vm_ip: "192.168.67.29"
 
   tasks:
-    - name: Get inventory ID for {{ aap_inventory_name }}
-      ansible.controller.inventory_info:
+    - name: Lookup inventory ID
+      ansible.controller.inventory:
         name: "{{ aap_inventory_name }}"
-      register: inventory_result
+        state: list
+      register: inv_info
 
-    - name: Add host {{ vm_name }} to inventory
+    - name: Add host to inventory
       ansible.controller.host:
         name: "{{ vm_name }}"
-        inventory: "{{ inventory_result.inventory.id }}"
+        inventory: "{{ inv_info.results[0].id }}"
         enabled: true
         variables: |
           ansible_host: {{ vm_ip }}
-      register: host_result
-
-    - name: Confirm host registration
-      debug:
-        msg: "Host {{ vm_name }} with IP {{ vm_ip }} added to inventory ID {{ inventory_result.inventory.id }}"
