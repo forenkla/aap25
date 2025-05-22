@@ -10,6 +10,7 @@
     - name: Clone, randomize MAC, start VM, return IP
       shell: |
         set -e
+        export PATH="/usr/local/bin:$PATH"
 
         MASTER_VM_UUID="66937242-61E8-44F7-8AE3-18F284522049"
         NEW_VM_NAME="{{ new_vm_name }}"
