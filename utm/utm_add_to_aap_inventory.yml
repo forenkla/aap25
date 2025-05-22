@@ -6,21 +6,26 @@
 
   vars:
     aap_inventory_name: "AAP25 inventory"
+    aap_organization: "Default"
     vm_name: "ansible-vm"
     vm_ip: "192.168.67.29"
 
   tasks:
-    - name: Lookup inventory ID
+    - name: Ensure inventory exists (retrieve ID)
       ansible.controller.inventory:
         name: "{{ aap_inventory_name }}"
-        organization: "Default"
-        state: list
-      register: inv_info
+        organization: "{{ aap_organization }}"
+        state: present
+      register: inventory
 
     - name: Add host to inventory
       ansible.controller.host:
         name: "{{ vm_name }}"
-        inventory: "{{ inv_info.results[0].id }}"
+        inventory: "{{ inventory.id }}"
         enabled: true
         variables: |
           ansible_host: {{ vm_ip }}
+
+    - name: Confirm host creation
+      debug:
+        msg: "VM '{{ vm_name }}' registered with IP {{ vm_ip }} in inventory '{{ aap_inventory_name }}'"
