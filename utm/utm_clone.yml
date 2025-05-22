@@ -1,6 +1,6 @@
 ---
 - name: Clone and start UTM VM
-  hosts: localhost
+  hosts: powerbook
   gather_facts: false
 
   vars:
