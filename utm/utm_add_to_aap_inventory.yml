@@ -23,8 +23,8 @@
         name: "{{ vm_name }}"
         inventory: "{{ inventory.id }}"
         enabled: true
-        variables: |
-          ansible_host: {{ vm_ip }}
+        variables:
+          ansible_host: "{{ vm_ip }}"
 
     - name: Confirm host creation
       debug:
