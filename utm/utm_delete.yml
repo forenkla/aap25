@@ -1,0 +1,37 @@
+---
+- name: Decommission a UTM VM
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    vm_name: "ansible-vm"
+
+  tasks:
+    - name: Stop VM
+      uri:
+        url: http://192.168.67.1:5050/stop
+        method: POST
+        body_format: json
+        body:
+          name: "{{ vm_name }}"
+      register: stop_result
+      failed_when: stop_result.status >= 500
+
+    - name: Confirm stop
+      debug:
+        msg: "VM {{ stop_result.json.name }} stopped successfully"
+
+    - name: Delete VM
+      uri:
+        url: http://192.168.67.1:5050/delete
+        method: POST
+        body_format: json
+        body:
+          name: "{{ vm_name }}"
+      register: delete_result
+      failed_when: delete_result.status >= 500
+
+    - name: Confirm deletion
+      debug:
+        msg: "VM {{ delete_result.json.name }} deleted successfully"
