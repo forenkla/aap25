@@ -27,7 +27,7 @@ class InventoryModule(BaseInventoryPlugin):
     NAME = 'utm'
 
     def verify_file(self, path):
-        return path.endswith(('utm.yml', 'utm.yaml'))
+        return path.endswith(('.yml', '.yaml'))
 
     def parse(self, inventory, loader, path, cache=True):
         super(InventoryModule, self).parse(inventory, loader, path)
