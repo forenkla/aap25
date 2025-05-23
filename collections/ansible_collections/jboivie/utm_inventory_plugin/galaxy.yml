@@ -1,0 +1,8 @@
+namespace: jboivie
+name: utm_inventory_plugin
+version: 1.0.0
+readme: README.md
+authors:
+  - Jens Boivie
+description: UTM dynamic inventory plugin for Ansible
+license: MIT
