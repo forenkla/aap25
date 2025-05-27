@@ -20,7 +20,7 @@
         method: POST
         body_format: json
         body:
-          name: "{{ adjusted_new_vm_name }}"
+          name: "{{ adjusted_vm_name }}"
       register: result
       failed_when: result.status >= 400
 
