@@ -14,9 +14,9 @@
       set_fact:
         name_suffix: >-
           {% if managed_by_ansible | lower == 'yes' and delete_lock | lower == 'yes' %}
-            _ml
+            '_ml'
           {% elif managed_by_ansible | lower == 'yes' %}
-            _m
+            '_m'
           {% else %}
             ''
           {% endif %}
