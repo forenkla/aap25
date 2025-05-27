@@ -13,14 +13,9 @@
             | list
           }}
 
-    - name: Build utm_choices safely
+    - name: Build utm_choices with just host names
       set_fact:
-        utm_choices: []
-
-    - name: Append each "host (ip)" line
-      set_fact:
-        utm_choices: "{{ utm_choices + [item ~ ' (' ~ hostvars[item].ansible_host ~ ')'] }}"
-      loop: "{{ utm_hosts }}"
+        utm_choices: "{{ utm_hosts }}"
 
     - name: Show formatted list of UTM hosts
       debug:
