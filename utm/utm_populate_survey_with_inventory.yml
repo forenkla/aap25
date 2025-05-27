@@ -1,0 +1,33 @@
+---
+- name: Update UTM VM Manager survey with fresh host list
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    controller_verify_ssl: false
+
+    workflow_job_template_name: "UTM VM Manager"
+
+  tasks:
+    - name: Apply survey to Workflow Job Template
+      ansible.controller.workflow_job_template:
+        name: "{{ workflow_job_template_name }}"
+        survey_enabled: true
+        survey_spec:
+          name: "UTM VM Manager Survey"
+          description: "Select an existing VM"
+          spec:
+            - question_name: "Select existing VM"
+              question_description: "Choose a host from the dynamic UTM inventory"
+              required: true
+              type: multiplechoice
+              choices: "{{ utm_choices | join(',') }}"
+              default: "{{ utm_choices[0] if utm_choices else '' }}"
+              variable: "existing_vm"
+              min: 1
+              max: 1
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: false

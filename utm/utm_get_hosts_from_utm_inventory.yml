@@ -25,3 +25,8 @@
     - name: Show formatted list of UTM hosts
       debug:
         var: utm_choices
+
+    - name: Make utm_choices available to next node
+      set_statx:
+        data:
+          utm_choices: "{{ utm_choices }}"
