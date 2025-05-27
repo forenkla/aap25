@@ -16,7 +16,7 @@ options:
   plugin:
     description: Token that ensures this is a source file for the 'utm' plugin.
     required: true
-    choices: ['utm']
+    choices: ['utm', 'jboivie.utm_inventory_plugin.utm']
   url:
     description: The URL of the UTM daemon’s inventory endpoint.
     required: true
