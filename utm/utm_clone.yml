@@ -6,15 +6,21 @@
 
   vars:
     new_vm_name: ""
+    managed_by_ansible: "No"  # This will be overridden by the survey
 
   tasks:
+    - name: Adjust VM name based on managed_by_ansible
+      set_fact:
+        adjusted_vm_name: >-
+          {{ new_vm_name ~ '_m' if managed_by_ansible | lower == 'yes' else new_vm_name }}
+
     - name: Request clone from macOS UTM daemon
       uri:
         url: "http://192.168.67.1:5050/clone"
         method: POST
         body_format: json
         body:
-          name: "{{ new_vm_name }}"
+          name: "{{ adjusted_new_vm_name }}"
       register: result
       failed_when: result.status >= 400
 
