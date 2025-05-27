@@ -1,0 +1,30 @@
+---
+- name: Generate host list from UTM Inventory
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Collect UTM hosts
+      set_fact:
+        utm_hosts: >-
+          {{
+            groups['all']
+            | list
+          }}
+
+    - name: Build display names like "hostname (ansible_host)"
+      set_fact:
+        utm_choices: >-
+          {{
+            utm_hosts
+            | map('extract', hostvars)
+            | zip(utm_hosts | map('extract', hostvars) | map(attribute='ansible_host'))
+            | map('join', ' (')
+            | map('regex_replace', '$', ')')
+            | list
+          }}
+
+    - name: Show formatted list of UTM hosts
+      debug:
+        var: utm_choices
