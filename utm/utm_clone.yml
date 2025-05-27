@@ -13,13 +13,9 @@
     - name: Determine suffix based on flags
       set_fact:
         name_suffix: >-
-          {% if managed_by_ansible | lower == 'yes' and delete_lock | lower == 'yes' %}
-            '_ml'
-          {% elif managed_by_ansible | lower == 'yes' %}
-            '_m'
-          {% else %}
-            ''
-          {% endif %}
+          {{ '_ml' if managed_by_ansible | lower == 'yes' and delete_lock | lower == 'yes'
+            else '_m' if managed_by_ansible | lower == 'yes'
+            else '' }}
 
     - name: Adjust VM name based on managed_by_ansible
       set_fact:
