@@ -13,17 +13,14 @@
             | list
           }}
 
-    - name: Build display names like "hostname (ansible_host)"
+    - name: Build utm_choices safely
       set_fact:
-        utm_choices: >-
-          {{
-            utm_hosts
-            | map('extract', hostvars)
-            | zip(utm_hosts | map('extract', hostvars) | map(attribute='ansible_host'))
-            | map('join', ' (')
-            | map('regex_replace', '$', ')')
-            | list
-          }}
+        utm_choices: []
+
+    - name: Append each "host (ip)" line
+      set_fact:
+        utm_choices: "{{ utm_choices + [item ~ ' (' ~ hostvars[item].ansible_host ~ ')'] }}"
+      loop: "{{ utm_hosts }}"
 
     - name: Show formatted list of UTM hosts
       debug:
