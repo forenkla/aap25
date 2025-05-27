@@ -7,12 +7,23 @@
   vars:
     new_vm_name: ""
     managed_by_ansible: "No"  # This will be overridden by the survey
+    delete_lock: "No"         # Set via survey
 
   tasks:
+    - name: Determine suffix based on flags
+      set_fact:
+        name_suffix: >-
+          {% if managed_by_ansible | lower == 'yes' and delete_lock | lower == 'yes' %}
+            _ml
+          {% elif managed_by_ansible | lower == 'yes' %}
+            _m
+          {% else %}
+            ''
+          {% endif %}
+
     - name: Adjust VM name based on managed_by_ansible
       set_fact:
-        adjusted_vm_name: >-
-          {{ new_vm_name ~ '_m' if managed_by_ansible | lower == 'yes' else new_vm_name }}
+        adjusted_vm_name: "{{ new_vm_name }}{{ name_suffix }}"
 
     - name: Request clone from macOS UTM daemon
       uri:
