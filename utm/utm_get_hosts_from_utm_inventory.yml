@@ -27,6 +27,6 @@
         var: utm_choices
 
     - name: Make utm_choices available to next node
-      set_statx:
+      set_stats:
         data:
           utm_choices: "{{ utm_choices }}"
