@@ -43,7 +43,7 @@
       #     name: "{{ existing_vm }}{{ vm_suffix }}"
       #   status_code: 200
       debug:
-        "VM WOULD BE DELETED!!!"
+        msg: "VM WOULD BE DELETED!!!"
       when:
         - vm_action == "Shutdown and Delete"
         - hostvars[existing_vm].delete_lock | default('No') != "Yes"
