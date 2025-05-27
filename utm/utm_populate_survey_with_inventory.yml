@@ -22,7 +22,7 @@
               question_description: "Choose a host from the dynamic UTM inventory"
               required: true
               type: multiplechoice
-              choices: "{{ utm_choices | join(',') }}"
+              choices: "{{ utm_choices }}"
               default: "{{ utm_choices[0] if utm_choices else '' }}"
               variable: "existing_vm"
               min: 1
