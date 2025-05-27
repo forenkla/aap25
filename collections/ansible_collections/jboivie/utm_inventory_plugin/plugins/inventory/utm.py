@@ -45,3 +45,6 @@ class InventoryModule(BaseInventoryPlugin):
             self.inventory.add_host(host)
             for var, value in data.get('_meta', {}).get('hostvars', {}).get(host, {}).items():
                 self.inventory.set_variable(host, var, value)
+
+def get_plugin_type():
+    return 'inventory'
