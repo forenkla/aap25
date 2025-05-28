@@ -3,7 +3,7 @@
   gather_facts: false
   vars:
     repo_url: https://github.com/forenkla/aap25.git
-    repo_dest: /home/jboivie
+    repo_dest: /home/jboivie/aap25
 
   tasks:
     - name: Clone the full Git repo
