@@ -35,15 +35,13 @@
         - hostvars[existing_vm].delete_lock | default('No') == "Yes"
 
     - name: Delete VM via Swift endpoint
-      # uri:
-      #   url: "{{ delete_url }}"
-      #   method: POST
-      #   body_format: json
-      #   body:
-      #     name: "{{ existing_vm }}{{ vm_suffix }}"
-      #   status_code: 200
-      debug:
-        msg: "VM WOULD BE DELETED!!!"
+      uri:
+        url: "{{ delete_url }}"
+        method: POST
+        body_format: json
+        body:
+          name: "{{ existing_vm }}{{ vm_suffix }}"
+        status_code: 200
       when:
         - vm_action == "Shutdown and Delete"
         - hostvars[existing_vm].delete_lock | default('No') != "Yes"
