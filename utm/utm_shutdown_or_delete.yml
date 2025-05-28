@@ -5,12 +5,12 @@
   become: true
 
   tasks:
-    - name: Shutdown the RHEL VM
-      ansible.builtin.command: /usr/sbin/poweroff
-      become: true
-      async: 0
-      poll: 0
-
+  - name: Shutdown the RHEL VM cleanly
+    community.general.shutdown:
+      delay: 0
+      msg: "Shutting down via Ansible"
+    become: true
+    
 - name: Optionally delete the VM in Swift
   hosts: localhost
   gather_facts: false
