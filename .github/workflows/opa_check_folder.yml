@@ -44,8 +44,7 @@ jobs:
           echo "----------------------"
           echo "Running linting"
           echo "----------------------"
-          for playbook in $(ls *.yml)
-          do
+          for playbook in policy_checked_playbooks/*.yml; do
             echo "Running conftest on: $playbook"
             ./conftest test $playbook --policy rego_policies/ci_security_gate
           done
