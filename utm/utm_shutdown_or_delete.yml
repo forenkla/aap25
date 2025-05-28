@@ -1,7 +1,6 @@
 ---
 - name: Shutdown or delete a VM from UTM
-  hosts: even_one_more_test.containersarelinux.net 
-  #"{{ existing_vm }}"
+  hosts: "{{ existing_vm }}"
   gather_facts: false
   become: true
 
