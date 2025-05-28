@@ -1,0 +1,14 @@
+- name: Get new version of policies from Git
+  hosts: opa.containersarelinux.net
+  gather_facts: false
+  vars:
+    repo_url: https://github.com/forenkla/aap25.git
+    repo_dest: /home/jboivie
+
+  tasks:
+    - name: Clone the full Git repo
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dest }}"
+        version: main
+        force: yes
