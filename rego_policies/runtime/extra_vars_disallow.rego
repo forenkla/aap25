@@ -16,6 +16,6 @@ extra_vars_policy = result if {
 
 	result := {
 		"allowed": false,
-		"violations": ["The extra_var 'delete_lock' is NOT allowed."],
+		"violations": ["The extra_var 'delete_lock' is not allowed."],
 	}
 }
