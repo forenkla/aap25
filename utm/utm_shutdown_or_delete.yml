@@ -11,39 +11,39 @@
       msg: "Shutting down via Ansible"
     become: true
     
-# - name: Optionally delete the VM in Swift
-#   hosts: localhost
-#   gather_facts: false
-#   connection: local
+- name: Optionally delete the VM in Swift
+  hosts: localhost
+  gather_facts: false
+  connection: local
 
-#   vars:
-#     # Assumes all hostnames are valid and exist in inventory
-#     delete_url: "http://192.168.67.1:5050/delete"
-#     vm_suffix: "_m"
+  vars:
+    # Assumes all hostnames are valid and exist in inventory
+    delete_url: "http://192.168.67.1:5050/delete"
+    vm_suffix: "_m"
 
-#   tasks:
-#     - name: Check if we need to delete the VM
-#       debug:
-#         msg: "Skipping deletion as vm_action is not 'Shutdown and Delete'"
-#       when: vm_action != "Shutdown and Delete"
+  tasks:
+    - name: Check if we need to delete the VM
+      debug:
+        msg: "Skipping deletion as vm_action is not 'Shutdown and Delete'"
+      when: vm_action != "Shutdown and Delete"
 
-#     - name: Fail if VM has delete_lock = Yes
-#       fail:
-#         msg: "Deletion blocked: VM '{{ existing_vm }}' is protected by delete_lock"
-#       when:
-#         - vm_action == "Shutdown and Delete"
-#         - hostvars[existing_vm].delete_lock | default('No') == "Yes"
+    - name: Fail if VM has delete_lock = Yes
+      fail:
+        msg: "Deletion blocked: VM '{{ existing_vm }}' is protected by delete_lock"
+      when:
+        - vm_action == "Shutdown and Delete"
+        - hostvars[existing_vm].delete_lock | default('No') == "Yes"
 
-#     - name: Delete VM via Swift endpoint
-#       # uri:
-#       #   url: "{{ delete_url }}"
-#       #   method: POST
-#       #   body_format: json
-#       #   body:
-#       #     name: "{{ existing_vm }}{{ vm_suffix }}"
-#       #   status_code: 200
-#       debug:
-#         msg: "VM WOULD BE DELETED!!!"
-#       when:
-#         - vm_action == "Shutdown and Delete"
-#         - hostvars[existing_vm].delete_lock | default('No') != "Yes"
+    - name: Delete VM via Swift endpoint
+      # uri:
+      #   url: "{{ delete_url }}"
+      #   method: POST
+      #   body_format: json
+      #   body:
+      #     name: "{{ existing_vm }}{{ vm_suffix }}"
+      #   status_code: 200
+      debug:
+        msg: "VM WOULD BE DELETED!!!"
+      when:
+        - vm_action == "Shutdown and Delete"
+        - hostvars[existing_vm].delete_lock | default('No') != "Yes"
