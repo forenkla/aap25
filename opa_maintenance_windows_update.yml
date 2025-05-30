@@ -1,34 +1,35 @@
 ---
-- name: Preview OPA maintenance window update (robust version)
+- name: Preview OPA maintenance window update (safe timezone math)
   hosts: localhost
   gather_facts: true
   vars:
     rego_file_path: /home/jboivie/aap25/rego_policies/runtime/maintenance_window.rego
     target_host: opa.containersarelinux.net
   tasks:
-    - name: Get local hour (Swedish time)
+    - name: Get local hour and timezone offset
       set_fact:
         local_hour: "{{ ansible_date_time.hour | int }}"
+        tz_offset_hours: "{{ (ansible_date_time.tz_offset | int) // 100 }}"
 
-    - name: Compute UTC hours based on local time
+    - name: Compute UTC maintenance window hours
       set_fact:
-        start_hour_utc: "{{ ((local_hour - 1) - ansible_date_time.tz_offset | int // 100) % 24 }}"
-        end_hour_utc: "{{ ((local_hour + 1) - ansible_date_time.tz_offset | int // 100) % 24 }}"
+        start_hour_utc: "{{ (local_hour - 1 - tz_offset_hours) % 24 }}"
+        end_hour_utc: "{{ (local_hour + 1 - tz_offset_hours) % 24 }}"
 
-    - name: Show what would be written to the rego file
+    - name: Show calculated UTC maintenance window
       debug:
         msg: |
           maintenance_start_hour := {{ start_hour_utc }}
           maintenance_end_hour := {{ end_hour_utc }}
 
-    # - name: Update rego file on remote host
+    # - name: Replace maintenance_start_hour in rego file
     #   delegate_to: "{{ target_host }}"
     #   replace:
     #     path: "{{ rego_file_path }}"
     #     regexp: 'maintenance_start_hour\s*:=\s*\d+'
     #     replace: "maintenance_start_hour := {{ start_hour_utc }}"
 
-    # - name: Update rego file on remote host
+    # - name: Replace maintenance_end_hour in rego file
     #   delegate_to: "{{ target_host }}"
     #   replace:
     #     path: "{{ rego_file_path }}"
