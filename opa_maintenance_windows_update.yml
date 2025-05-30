@@ -1,33 +1,35 @@
 ---
-- name: Preview OPA maintenance window update (timezone-aware)
-  hosts: opa.containersarelinux.net
-  gather_facts: false
+- name: Preview OPA maintenance window update (robust version)
+  hosts: localhost
+  gather_facts: true
   vars:
-    timezone: Europe/Stockholm
     rego_file_path: /home/jboivie/aap25/rego_policies/runtime/maintenance_window.rego
+    target_host: opa.containersarelinux.net
   tasks:
-    - name: Get current time in Swedish local time
+    - name: Get local hour (Swedish time)
       set_fact:
-        now_swedish: "{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') | to_datetime('%Y-%m-%dT%H:%M:%S') | to_timezone(timezone) }}"
+        local_hour: "{{ ansible_date_time.hour | int }}"
 
-    - name: Calculate UTC maintenance window start and end (rounded to hour)
+    - name: Compute UTC hours based on local time
       set_fact:
-        start_hour_utc: "{{ (now_swedish.replace(minute=0, second=0) - timedelta(hours=1)).astimezone('UTC').hour }}"
-        end_hour_utc: "{{ (now_swedish.replace(minute=0, second=0) + timedelta(hours=1)).astimezone('UTC').hour }}"
+        start_hour_utc: "{{ ((local_hour - 1) - ansible_date_time.tz_offset | int // 100) % 24 }}"
+        end_hour_utc: "{{ ((local_hour + 1) - ansible_date_time.tz_offset | int // 100) % 24 }}"
 
-    - name: Show calculated UTC maintenance window
+    - name: Show what would be written to the rego file
       debug:
         msg: |
           maintenance_start_hour := {{ start_hour_utc }}
           maintenance_end_hour := {{ end_hour_utc }}
 
-    # - name: Replace maintenance_start_hour in rego file
+    # - name: Update rego file on remote host
+    #   delegate_to: "{{ target_host }}"
     #   replace:
     #     path: "{{ rego_file_path }}"
     #     regexp: 'maintenance_start_hour\s*:=\s*\d+'
     #     replace: "maintenance_start_hour := {{ start_hour_utc }}"
 
-    # - name: Replace maintenance_end_hour in rego file
+    # - name: Update rego file on remote host
+    #   delegate_to: "{{ target_host }}"
     #   replace:
     #     path: "{{ rego_file_path }}"
     #     regexp: 'maintenance_end_hour\s*:=\s*\d+'
