@@ -1,0 +1,37 @@
+---
+- name: Preview OPA maintenance window update
+  hosts: opa.containersarelinux.net
+  gather_facts: false
+  vars:
+    rego_file_path: /home/jboivie/aap25/rego_policies/runtime/maintenance_window.rego
+  tasks:
+    - name: Get current local (Swedish) hour
+      command: date '+%H'
+      register: local_hour_raw
+
+    - name: Convert local hour to integer
+      set_fact:
+        local_hour: "{{ local_hour_raw.stdout | int }}"
+
+    - name: Calculate maintenance window in UTC
+      set_fact:
+        start_hour_utc: "{{ (local_hour - 1 - 2) % 24 }}"
+        end_hour_utc: "{{ (local_hour + 1 - 2) % 24 }}"
+
+    - name: Show calculated UTC maintenance window
+      debug:
+        msg: |
+          maintenance_start_hour := {{ start_hour_utc }}
+          maintenance_end_hour := {{ end_hour_utc }}
+
+    # - name: Replace maintenance_start_hour in rego file
+    #   replace:
+    #     path: "{{ rego_file_path }}"
+    #     regexp: 'maintenance_start_hour\s*:=\s*\d+'
+    #     replace: "maintenance_start_hour := {{ start_hour_utc }}"
+
+    # - name: Replace maintenance_end_hour in rego file
+    #   replace:
+    #     path: "{{ rego_file_path }}"
+    #     regexp: 'maintenance_end_hour\s*:=\s*\d+'
+    #     replace: "maintenance_end_hour := {{ end_hour_utc }}"
