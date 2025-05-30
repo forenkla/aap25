@@ -1,5 +1,5 @@
 ---
-- name: Preview OPA maintenance window update (safe timezone math)
+- name: Preview OPA maintenance window update (final, truly working version)
   hosts: localhost
   gather_facts: true
   vars:
@@ -8,13 +8,18 @@
   tasks:
     - name: Get local hour and timezone offset
       set_fact:
-        local_hour: "{{ ansible_date_time.hour | int }}"
-        tz_offset_hours: "{{ (ansible_date_time.tz_offset | int) // 100 }}"
+        local_hour_raw: "{{ ansible_date_time.hour }}"
+        tz_offset_raw: "{{ ansible_date_time.tz_offset }}"
+
+    - name: Parse integers from raw time values
+      set_fact:
+        local_hour: "{{ local_hour_raw | int }}"
+        tz_offset_hours: "{{ tz_offset_raw | int // 100 }}"
 
     - name: Compute UTC maintenance window hours
       set_fact:
-        start_hour_utc: "{{ (local_hour - 1 - tz_offset_hours) % 24 }}"
-        end_hour_utc: "{{ (local_hour + 1 - tz_offset_hours) % 24 }}"
+        start_hour_utc: "{{ ((local_hour | int) - 1 - (tz_offset_hours | int)) % 24 }}"
+        end_hour_utc: "{{ ((local_hour | int) + 1 - (tz_offset_hours | int)) % 24 }}"
 
     - name: Show calculated UTC maintenance window
       debug:
