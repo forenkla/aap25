@@ -15,8 +15,8 @@
 
     - name: Calculate maintenance window in UTC
       set_fact:
-        start_hour_utc: "{{ (local_hour - 1 - 2) % 24 }}"
-        end_hour_utc: "{{ (local_hour + 1 - 2) % 24 }}"
+        start_hour_utc: "{{ ((local_hour_raw.stdout | int) - 1 - 2) % 24 }}"
+        end_hour_utc: "{{ ((local_hour_raw.stdout | int) + 1 - 2) % 24 }}"
 
     - name: Show calculated UTC maintenance window
       debug:
