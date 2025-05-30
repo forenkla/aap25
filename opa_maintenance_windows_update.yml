@@ -1,22 +1,19 @@
 ---
-- name: Preview OPA maintenance window update
+- name: Preview OPA maintenance window update (timezone-aware)
   hosts: opa.containersarelinux.net
   gather_facts: false
   vars:
+    timezone: Europe/Stockholm
     rego_file_path: /home/jboivie/aap25/rego_policies/runtime/maintenance_window.rego
   tasks:
-    - name: Get current local (Swedish) hour
-      command: date '+%H'
-      register: local_hour_raw
-
-    - name: Convert local hour to integer
+    - name: Get current time in Swedish local time
       set_fact:
-        local_hour: "{{ local_hour_raw.stdout | int }}"
+        now_swedish: "{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') | to_datetime('%Y-%m-%dT%H:%M:%S') | to_timezone(timezone) }}"
 
-    - name: Calculate maintenance window in UTC
+    - name: Calculate UTC maintenance window start and end (rounded to hour)
       set_fact:
-        start_hour_utc: "{{ ((local_hour_raw.stdout | int) - 1 - 2) % 24 }}"
-        end_hour_utc: "{{ ((local_hour_raw.stdout | int) + 1 - 2) % 24 }}"
+        start_hour_utc: "{{ (now_swedish.replace(minute=0, second=0) - timedelta(hours=1)).astimezone('UTC').hour }}"
+        end_hour_utc: "{{ (now_swedish.replace(minute=0, second=0) + timedelta(hours=1)).astimezone('UTC').hour }}"
 
     - name: Show calculated UTC maintenance window
       debug:
