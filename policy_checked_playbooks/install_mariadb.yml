@@ -1,8 +1,6 @@
 ---
 - name: Install MariaDB
   hosts: dbservers
-  vars:
-    version = "10.9.4"
 
   tasks:
     - name: Install MariaDB-server
@@ -10,4 +8,5 @@
         name: "MariaDB-server-10.9.4"
         state: latest
 
-# will this work now`
+# version = 10.9.4
+# test
