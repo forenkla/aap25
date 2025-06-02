@@ -1,9 +1,10 @@
 ---
-- name: Preview OPA maintenance window update (final, truly working version)
+- name: Update maintenance window in Git-tracked Rego file
   hosts: localhost
   gather_facts: true
   vars:
-    rego_file_path: /home/jboivie/aap25/rego_policies/runtime/maintenance_window.rego
+    repo_path: /home/jboivie/aap25
+    rego_file_rel_path: rego_policies/runtime/maintenance_window.rego
     target_host: opa.containersarelinux.net
   tasks:
     - name: Get local hour and timezone offset
@@ -21,22 +22,36 @@
         start_hour_utc: "{{ ((local_hour | int) - 1 - (tz_offset_hours | int)) % 24 }}"
         end_hour_utc: "{{ ((local_hour | int) + 1 - (tz_offset_hours | int)) % 24 }}"
 
-    - name: Show calculated UTC maintenance window
+    - name: Show what will be applied
       debug:
         msg: |
           maintenance_start_hour := {{ start_hour_utc }}
           maintenance_end_hour := {{ end_hour_utc }}
 
-    # - name: Replace maintenance_start_hour in rego file
-    #   delegate_to: "{{ target_host }}"
-    #   replace:
-    #     path: "{{ rego_file_path }}"
-    #     regexp: 'maintenance_start_hour\s*:=\s*\d+'
-    #     replace: "maintenance_start_hour := {{ start_hour_utc }}"
+    - name: Update Rego file on remote host
+      delegate_to: "{{ target_host }}"
+      block:
+        - name: Replace maintenance_start_hour in Rego file
+          replace:
+            path: "{{ repo_path }}/{{ rego_file_rel_path }}"
+            regexp: 'maintenance_start_hour\s*:=\s*\d+'
+            replace: "maintenance_start_hour := {{ start_hour_utc }}"
 
-    # - name: Replace maintenance_end_hour in rego file
-    #   delegate_to: "{{ target_host }}"
-    #   replace:
-    #     path: "{{ rego_file_path }}"
-    #     regexp: 'maintenance_end_hour\s*:=\s*\d+'
-    #     replace: "maintenance_end_hour := {{ end_hour_utc }}"
+        - name: Replace maintenance_end_hour in Rego file
+          replace:
+            path: "{{ repo_path }}/{{ rego_file_rel_path }}"
+            regexp: 'maintenance_end_hour\s*:=\s*\d+'
+            replace: "maintenance_end_hour := {{ end_hour_utc }}"
+
+        - name: Commit changes if needed
+          command: >
+            git commit -am "Update maintenance window to {{ start_hour_utc }}–{{ end_hour_utc }} UTC"
+          args:
+            chdir: "{{ repo_path }}"
+          register: git_commit
+          failed_when: git_commit.rc != 0 and 'nothing to commit' not in git_commit.stdout
+
+        - name: Push changes
+          command: git push
+          args:
+            chdir: "{{ repo_path }}"
