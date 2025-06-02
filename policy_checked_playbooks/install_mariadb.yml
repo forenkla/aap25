@@ -1,6 +1,9 @@
 ---
 - name: Install MariaDB
   hosts: dbservers
+  vars:
+    version = "10.9.4"
+    
   tasks:
     - name: Install MariaDB-server
       ansible.builtin.package:
