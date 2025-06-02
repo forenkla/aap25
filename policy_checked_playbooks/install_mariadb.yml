@@ -3,11 +3,11 @@
   hosts: dbservers
   vars:
     version = "10.9.4"
-    
+
   tasks:
     - name: Install MariaDB-server
       ansible.builtin.package:
-        name: "MariaDB-server" 
+        name: "MariaDB-server-10.9.4"
         state: latest
 
 # will this work now`
