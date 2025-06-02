@@ -4,7 +4,7 @@
   tasks:
     - name: Install MariaDB-server
       ansible.builtin.package:
-        name: "MariaDB-server" #MariaDB-server-10.9.4
+        name: "MariaDB-server" 
         state: present
 
 # will this work now
