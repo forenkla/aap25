@@ -6,7 +6,7 @@
     - name: Install MariaDB-server
       ansible.builtin.package:
         name: "MariaDB-server-10.9.4"
-        state: latest
+        state: present
 
 # version = 10.9.4
 # test
