@@ -19,3 +19,13 @@ deny_unapproved_version contains msg if {
 
   msg := sprintf("Version %v of Mariadb-server is not allowed", [version])
 }
+
+
+# Deny if MariaDB-server is installed with no version specified
+deny_unapproved_version contains msg if {
+  some task in input.tasks
+  package_name := task["ansible.builtin.package"].name
+  lower(package_name) == "mariadb-server"
+
+  msg := "MariaDB-server must include a version (e.g. mariadb-server-10.9.4)"
+}
