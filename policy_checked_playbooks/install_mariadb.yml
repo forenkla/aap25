@@ -5,6 +5,6 @@
     - name: Install MariaDB-server
       ansible.builtin.package:
         name: "MariaDB-server" 
-        state: present
+        state: latest
 
-# will this work now
+# will this work now`
