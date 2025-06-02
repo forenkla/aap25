@@ -1,9 +1,9 @@
 package aap_policy_examples
 
 # Define maintenance window in UTC
-maintenance_start_hour := 04:00 # 15:00 UTC (5 PM EST)
+maintenance_start_hour := 4 # 15:00 UTC (5 PM EST)
 
-maintenance_end_hour := 06:00 # 17:00 UTC (9 AM EST)
+maintenance_end_hour := 6 # 17:00 UTC (9 AM EST)
 
 # Extract the job creation timestamp (which is in UTC)
 created_clock := time.clock(time.parse_rfc3339_ns(input.created)) # returns [hour, minute, second]
