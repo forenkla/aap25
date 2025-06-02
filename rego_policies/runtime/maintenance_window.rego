@@ -12,11 +12,17 @@ created_hour_utc := created_clock[0]
 
 # Check if job was created within the maintenance window (UTC)
 is_maintenance_time if {
-	created_hour_utc >= maintenance_start_hour # After 12:00 UTC
+	maintenance_start_hour <= maintenance_end_hour
+	created_hour_utc >= maintenance_start_hour
+	created_hour_utc <= maintenance_end_hour
 }
 
 is_maintenance_time if {
-	created_hour_utc <= maintenance_end_hour # Before or at 04:00 UTC
+	maintenance_start_hour > maintenance_end_hour
+	created_hour_utc >= maintenance_start_hour
+} else if {
+	maintenance_start_hour > maintenance_end_hour
+	created_hour_utc <= maintenance_end_hour
 }
 
 default maintenance_window := {
