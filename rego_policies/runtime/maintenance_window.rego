@@ -32,7 +32,7 @@ default maintenance_window := {
 
 maintenance_window := {
 	"allowed": false,
-	"violations": ["No job execution allowed outside of maintenance window"],
+	"violations": [sprintf("No job execution allowed outside of maintenance window (%02d:00–%02d:00 UTC)", [maintenance_start_hour, maintenance_end_hour])],
 } if {
 	not is_maintenance_time
 }
