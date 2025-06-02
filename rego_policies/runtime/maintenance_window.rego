@@ -1,7 +1,7 @@
 package aap_policy_examples
 
 # Define maintenance window in UTC
-maintenance_start_hour := 10 # 15:00 UTC (5 PM EST)
+maintenance_start_hour := 7 # 15:00 UTC (5 PM EST)
 
 maintenance_end_hour := 12 # 17:00 UTC (9 AM EST)
 
