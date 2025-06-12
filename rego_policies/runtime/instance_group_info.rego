@@ -12,7 +12,7 @@ instance_group_info := result if {
 	forks := object.get(input, ["forks"], {})
 
 	result := {
-		"allowed": true,
+		"allowed": false,
 		"violations": [
 			sprintf("Instance group name: %s", [ig.name]),
 			sprintf("Instance group capacity: %v", [ig.capacity]),
