@@ -17,6 +17,6 @@ instance_group_info := result if {
 			sprintf("Instance group name: %s", [ig.name]),
 			sprintf("Instance group capacity: %v", [ig.capacity]),
 			sprintf("Forks: %v", [forks])
-		]
+		],
 	}
 }
