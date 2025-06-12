@@ -2,19 +2,20 @@ package opa_demo_rules
 
 import rego.v1
 
-default instance_group_info = {
+default result = {
 	"allowed": true,
 	"violations": [],
 }
 
-instance_group_info = result if {
-	instance_group := object.get(input, ["instance_group"], null)
+result := output if {
+	ig := object.get(input, ["instance_group"], null)
 	forks := object.get(input, ["forks"], null)
 
-	result := {
+	output := {
 		"allowed": true,
 		"violations": [
-			sprintf("Instance group: %v", [instance_group]),
+			sprintf("Instance group name: %s", [ig.name]),
+			sprintf("Instance group capacity: %v", [ig.capacity]),
 			sprintf("Forks: %v", [forks])
 		]
 	}
