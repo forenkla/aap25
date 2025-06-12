@@ -8,8 +8,8 @@ default instance_group_info := {
 }
 
 instance_group_info := result if {
-	ig := object.get(input, ["instance_group"], null)
-	forks := object.get(input, ["forks"], null)
+	ig := object.get(input, ["instance_group"], {})
+	forks := object.get(input, ["forks"], {})
 
 	result := {
 		"allowed": true,
