@@ -1,17 +1,17 @@
-package opa_demo_rules
+package aap_policy_examples
 
 import rego.v1
 
-default result = {
+default instance_group_info := {
 	"allowed": true,
 	"violations": [],
 }
 
-result := output if {
+instance_group_info := result if {
 	ig := object.get(input, ["instance_group"], null)
 	forks := object.get(input, ["forks"], null)
 
-	output := {
+	result := {
 		"allowed": true,
 		"violations": [
 			sprintf("Instance group name: %s", [ig.name]),
