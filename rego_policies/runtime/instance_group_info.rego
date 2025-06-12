@@ -14,8 +14,12 @@ instance_group_info := result if {
 	result := {
 		"allowed": false,
 		"violations": [
-			sprintf("Instance group name: %s", [ig.name]),
-			sprintf("Instance group capacity: %v", [ig.capacity]),
+			sprintf("ig.name: %s", [ig.name]),
+			sprintf("ig.capacity: %v", [ig.capacity]),
+			sprintf("ig.jobs_running: %v", [ig.jobs_running]),
+			sprintf("ig.jobs_total: %v", [ig.jobs_total]),
+			sprintf("ig.max_concurrent_jobs: %v", [ig.max_concurrent_jobs]),
+			sprintf("ig.max_forks: %v", [ig.max_forks]),
 			sprintf("Forks: %v", [forks])
 		],
 	}
