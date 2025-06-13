@@ -1,0 +1,16 @@
+---
+- name: Rulebook for testing limits
+  hosts: all
+  sources:
+    - name: Listen for alerts from host1
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 6969
+
+  rules:
+    - name: Run Nonsense Tasks if number is even
+      condition: event.payload.random_number % 2 == 0
+      action:
+        run_job_template:
+          name: "Nonsense Tasks"
+          organization: "Default"
