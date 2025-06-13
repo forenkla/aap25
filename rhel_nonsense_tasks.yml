@@ -9,7 +9,7 @@
         creates: /tmp/demo_blob
 
     - name: Compute SHA256 checksum 3 times (CPU-bound)
-      ansible.builtin.command: |
+      ansible.builtin.shell: |
         sha256sum /tmp/demo_blob
         sha256sum /tmp/demo_blob
         sha256sum /tmp/demo_blob
