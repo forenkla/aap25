@@ -4,26 +4,21 @@
   tasks:
 
     - name: Generate a 50MB random file (CPU + disk I/O)
-      command: dd if=/dev/urandom of=/tmp/demo_blob bs=1M count=50
+      ansible.builtin.command: dd if=/dev/urandom of=/tmp/demo_blob bs=1M count=50
       args:
         creates: /tmp/demo_blob
 
     - name: Compute SHA256 checksum 3 times (CPU-bound)
-      shell: |
+      ansible.builtin.command: |
         sha256sum /tmp/demo_blob
         sha256sum /tmp/demo_blob
         sha256sum /tmp/demo_blob
 
-    - name: Compress the file
-      archive:
-        path: /tmp/demo_blob
-        dest: /tmp/demo_blob.tar.gz
-        format: gz
 
     - name: Count installed packages
-      command: rpm -qa
+      ansible.builtin.command: rpm -qa
       register: rpm_list
 
     - name: Show number of installed RPMs
-      debug:
+      ansible.builtin.debug:
         msg: "Installed RPMs: {{ rpm_list.stdout_lines | length }}"
