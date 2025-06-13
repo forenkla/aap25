@@ -8,8 +8,9 @@
         port: 6969
 
   rules:
-    - name: Run Nonsense Tasks if number is even
-      condition: event.payload.random_number % 2 == 0
+
+    - name: Run Nonsense Tasks if one_or_zero == 1
+      condition: event.payload.one_or_zero == 1
       action:
         run_job_template:
           name: "Nonsense Tasks"
