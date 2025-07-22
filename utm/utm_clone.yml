@@ -32,6 +32,10 @@
       register: result
       failed_when: result.status >= 400
 
+    - name: Debug clone response
+      debug:
+        var: result
+
     - name: Set output vars
       set_stats:
         data:
