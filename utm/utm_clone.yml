@@ -28,6 +28,7 @@
         body_format: json
         body:
           name: "{{ adjusted_vm_name }}"
+          template: "{{ vm_master }}"
       register: result
       failed_when: result.status >= 400
 
