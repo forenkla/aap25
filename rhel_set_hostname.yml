@@ -1,5 +1,5 @@
 - name: Set hostname on RHEL VM
-  hosts: "{{ vm_ip }}"
+  hosts: "{{ vm_name }}"
   gather_facts: false
   become: true
 
