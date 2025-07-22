@@ -1,10 +1,10 @@
 - name: Set hostname on RHEL VM
-  hosts: "{{ vm_name }}"
+  hosts: "{{ new_vm_name }}"
   gather_facts: false
   become: true
 
   tasks:
     - name: Set a hostname specifying strategy
       ansible.builtin.hostname:
-        name: "{{ vm_name }}"
+        name: "{{ new_vm_name }}"
         use: systemd
