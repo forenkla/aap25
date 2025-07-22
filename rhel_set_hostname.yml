@@ -6,5 +6,5 @@
   tasks:
     - name: Set a hostname specifying strategy
       ansible.builtin.hostname:
-        name: "{{ new_vm_name }}"
+        name: "{{ new_vm_name }}.containersarelinux.net"
         use: systemd
