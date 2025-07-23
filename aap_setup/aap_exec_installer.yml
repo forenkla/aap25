@@ -42,6 +42,8 @@
         ansible-playbook -i inventory ansible.containerized_installer.install
       args:
         chdir: "{{ aap_installer_dir }}"
+      become: false
+      remote_user: jboivie
       register: result
       ignore_errors: true
 
