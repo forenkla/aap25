@@ -28,3 +28,11 @@
         src: '{{ aap_installer_tar }}'
         dest: '{{ home_dir }}'
         remote_src: true
+
+    - name: Template the AAP inventory file
+      ansible.builtin.template:
+        src: "inventory-tls-new.j2"
+        dest: "{{ aap_installer_dir }}"
+        mode: '0644'
+        owner: jboivie
+        group: jboivie
