@@ -20,4 +20,5 @@
           - git-core
           - rsync
           - vim
+          - tree
         state: present
