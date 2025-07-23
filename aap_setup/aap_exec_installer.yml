@@ -1,8 +1,23 @@
 - name: Prepare and install AAP on RHEL VM
   hosts: all
+  gather_facts: false
   become: true
   tasks:
-    - name: Add line to /etc/hosts
+    - name: Add line to /etc/hosts for FQDN
       lineinfile:
         path: /etc/hosts
         line: "{{ my_ip }} {{ my_fqdn }} {{ my_name }}"
+
+    - name: Install ansible-core
+      ansible.builtin.dnf:
+        name: ansible-core
+        state: present
+
+    - name: Install optional troubleshooting utilities
+      ansible.builtin.dnf:
+        name:
+          - wget
+          - git-core
+          - rsync
+          - vim
+        state: present
