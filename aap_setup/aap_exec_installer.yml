@@ -5,4 +5,4 @@
     - name: Add line to /etc/hosts
       lineinfile:
         path: /etc/hosts
-        line: "{{ my_ip }} {{ my_name }} {{ my_fqdn }}"
+        line: "{{ my_ip }} {{ my_fqdn }} {{ my_name }}"
