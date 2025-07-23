@@ -36,3 +36,15 @@
         mode: '0644'
         owner: jboivie
         group: jboivie
+
+    - name: Run the AAP installer (with stdout shown after completion)
+      ansible.builtin.shell: |
+        ansible-playbook -i inventory ansible.containerized_installer.install
+      args:
+        chdir: "{{ aap_installer_dir }}"
+      register: result
+      ignore_errors: true
+
+    - name: Show installer output
+      ansible.builtin.debug:
+        var: result.stdout_lines
