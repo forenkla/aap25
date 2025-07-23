@@ -32,7 +32,7 @@
     - name: Template the AAP inventory file
       ansible.builtin.template:
         src: "inventory-tls-new.j2"
-        dest: "{{ aap_installer_dir }}"
+        dest: "{{ aap_installer_dir }}/inventory"
         mode: '0644'
         owner: jboivie
         group: jboivie
