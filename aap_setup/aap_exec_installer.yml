@@ -1,0 +1,8 @@
+- name: Prepare and install AAP on RHEL VM
+  hosts: all
+  become: true
+  tasks:
+    - name: Add line to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ my_ip }} {{ my_name }} {{ my_fqdn }}"
