@@ -22,3 +22,9 @@
           - vim
           - tree
         state: present
+
+    - name: Extract the AAP bundle
+      ansible.builtin.unarchive:
+        src: '{{ aap_installer_tar }}'
+        dest: '{{ home_dir }}'
+        remote_src: true
