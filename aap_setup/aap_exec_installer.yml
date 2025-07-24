@@ -5,6 +5,7 @@
 
   collections:
     - ansible.controller
+    - infra.aap_configuration
 
   tasks:
     - name: Add line to /etc/hosts for FQDN
@@ -54,20 +55,3 @@
     # - name: Show installer output
     #   ansible.builtin.debug:
     #     var: result.stdout_lines
-
-    - name: Fetch and apply license from RHSM
-      ansible.controller.license:
-        controller_host: "{{ aap_fqdn }}"
-        controller_username: "admin"
-        controller_password: "{{ simple_password }}"
-        validate_certs: false
-        eula_accepted: true
-        subscription_username: "{{ portal_username }}"
-        subscription_password: "{{ portal_password }}"
-        force: true
-        subscription_id: "{{ subscription_id }}"
-      register: license_result
-
-    - name: Show license result
-      debug:
-        var: license_result
