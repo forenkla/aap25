@@ -2,6 +2,10 @@
   hosts: all
   gather_facts: false
   become: true
+
+  collections:
+    - ansible.controller
+
   tasks:
     - name: Add line to /etc/hosts for FQDN
       lineinfile:
@@ -37,16 +41,17 @@
         owner: jboivie
         group: jboivie
 
-    - name: Run the AAP installer (with stdout shown after completion)
-      ansible.builtin.shell: |
-        ansible-playbook -i inventory ansible.containerized_installer.install
-      args:
-        chdir: "{{ aap_installer_dir }}"
-      become: false
-      remote_user: jboivie
-      register: result
-      ignore_errors: true
+    # - name: Run the AAP installer (with stdout shown after completion)
+    #   ansible.builtin.shell: |
+    #     ansible-playbook -i inventory ansible.containerized_installer.install
+    #   args:
+    #     chdir: "{{ aap_installer_dir }}"
+    #   become: false
+    #   remote_user: jboivie
+    #   register: result
+    #   ignore_errors: true
 
-    - name: Show installer output
-      ansible.builtin.debug:
-        var: result.stdout_lines
+    # - name: Show installer output
+    #   ansible.builtin.debug:
+    #     var: result.stdout_lines
+
