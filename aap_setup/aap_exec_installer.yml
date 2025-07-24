@@ -62,10 +62,10 @@
         controller_password: "{{ simple_password }}"
         validate_certs: false
         eula_accepted: true
-        subscription_username: "{{ registry_username }}"
-        subscription_password: "{{ registry_password }}"
+        subscription_username: "{{ portal_username }}"
+        subscription_password: "{{ portal_password }}"
         force: true
-        state: import
+        subscription_id: "{{ subscription_id }}"
       register: license_result
 
     - name: Show license result
