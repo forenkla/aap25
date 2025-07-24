@@ -27,19 +27,19 @@
           - tree
         state: present
 
-    - name: Extract the AAP bundle
-      ansible.builtin.unarchive:
-        src: '{{ aap_installer_tar }}'
-        dest: '{{ home_dir }}'
-        remote_src: true
+    # - name: Extract the AAP bundle
+    #   ansible.builtin.unarchive:
+    #     src: '{{ aap_installer_tar }}'
+    #     dest: '{{ home_dir }}'
+    #     remote_src: true
 
-    - name: Template the AAP inventory file
-      ansible.builtin.template:
-        src: "inventory-tls-new.j2"
-        dest: "{{ aap_installer_dir }}/inventory"
-        mode: '0644'
-        owner: jboivie
-        group: jboivie
+    # - name: Template the AAP inventory file
+    #   ansible.builtin.template:
+    #     src: "inventory-tls-new.j2"
+    #     dest: "{{ aap_installer_dir }}/inventory"
+    #     mode: '0644'
+    #     owner: jboivie
+    #     group: jboivie
 
     # - name: Run the AAP installer (with stdout shown after completion)
     #   ansible.builtin.shell: |
@@ -55,3 +55,18 @@
     #   ansible.builtin.debug:
     #     var: result.stdout_lines
 
+    - name: Fetch and apply license from RHSM
+      ansible.controller.license:
+        controller_host: "{{ aap_fqdn }}"
+        controller_username: "admin"
+        controller_password: "{{ simple_password }}"
+        validate_certs: false
+        eula_accepted: true
+        subscription_username: "{{ registry_username }}"
+        subscription_password: "{{ registry_password }}"
+        force: true
+      register: license_result
+
+    - name: Show license result
+      debug:
+        var: license_result
