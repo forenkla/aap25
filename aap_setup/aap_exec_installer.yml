@@ -55,3 +55,18 @@
     # - name: Show installer output
     #   ansible.builtin.debug:
     #     var: result.stdout_lines
+
+      - name: Apply AAP license
+        infra.aap_configuration.controller_license:
+          aap_validate_certs: false
+          aap_hostname: controller.example.com
+          aap_username: admin
+          aap_password: "{{ simple_password }}"
+          redhat_subscription_username: "{{ registry_username }}"
+          redhat_subscription_password: "{{ registry_password }}"
+          controller_license:
+            use_lookup: true
+            filters:
+              product_name: "Red Hat Ansible Automation Platform"
+              support_level: "Self-Support"
+          state: present
