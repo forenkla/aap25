@@ -24,6 +24,7 @@
       "-v",
       "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro"
     ],
+    "onCreateCommand": "/bin/bash /workspaces/aap25/.devcontainer/devcontainer-init.sh",
     "customizations": {
       "vscode": {
         "extensions": ["redhat.ansible"]
