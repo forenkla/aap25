@@ -65,6 +65,7 @@
         subscription_username: "{{ registry_username }}"
         subscription_password: "{{ registry_password }}"
         force: true
+        state: import
       register: license_result
 
     - name: Show license result
