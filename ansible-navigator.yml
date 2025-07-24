@@ -9,10 +9,6 @@ ansible-navigator:
     container-engine: podman
     enabled: true
     image: aap25.containersarelinux.net/ansible-automation-platform-25/ee-supported-rhel9
-  execution-environment:
-    container-engine: podman
-    enabled: false
-    image: aap25.containersarelinux.net/ansible-automation-platform-25/ee-minimal-utm
   logging:
     append: true
     level: info
