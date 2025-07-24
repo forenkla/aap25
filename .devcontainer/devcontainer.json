@@ -1,6 +1,6 @@
 {
-    "name": "ansible-dev-container-podman",
-    "image": "aap25.containersarelinux.net/ansible-local-dev:latest",
+    "name": "ansible-dev-tools",
+    "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
     "containerUser": "root",
     "runArgs": [
       "--cap-add=CAP_MKNOD",
@@ -18,7 +18,7 @@
       "--userns=host",
       "--security-opt",
       "unmask=/sys/fs/cgroup",
-      "--hostname=ansible-dev-container",
+      "--hostname=ansible-dev-tools",
       "--network=host",
       "--privileged"
     ],
