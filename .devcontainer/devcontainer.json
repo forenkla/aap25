@@ -20,7 +20,9 @@
       "unmask=/sys/fs/cgroup",
       "--hostname=ansible-dev-tools",
       "--network=host",
-      "--privileged"
+      "--privileged",
+      "-v",
+      "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro"
     ],
     "customizations": {
       "vscode": {
