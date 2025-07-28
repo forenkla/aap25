@@ -1,34 +1,39 @@
 {
-    "name": "ansible-dev-tools",
-    "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
-    "containerUser": "root",
-    "runArgs": [
-      "--cap-add=CAP_MKNOD",
-      "--cap-add=NET_ADMIN",
-      "--cap-add=SYS_ADMIN",
-      "--cap-add=SYS_RESOURCE",
-      "--device",
-      "/dev/fuse",
-      "--security-opt",
-      "seccomp=unconfined",
-      "--security-opt",
-      "label=disable",
-      "--security-opt",
-      "apparmor=unconfined",
-      "--userns=host",
-      "--security-opt",
-      "unmask=/sys/fs/cgroup",
-      "--hostname=ansible-dev-tools",
-      "--network=host",
-      "--privileged",
-      "-v",
-      "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro"
-    ],
-    "onCreateCommand": "/bin/bash /workspaces/aap25/.devcontainer/devcontainer-init.sh",
-    "customizations": {
-      "vscode": {
-        "extensions": ["redhat.ansible"]
-      }
+  "name": "ansible-dev-tools",
+  "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
+  "containerUser": "root",
+  "runArgs": [
+    "--cap-add=CAP_MKNOD",
+    "--cap-add=NET_ADMIN",
+    "--cap-add=SYS_ADMIN",
+    "--cap-add=SYS_RESOURCE",
+    "--device",
+    "/dev/fuse",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--security-opt",
+    "label=disable",
+    "--security-opt",
+    "apparmor=unconfined",
+    "--userns=host",
+    "--security-opt",
+    "unmask=/sys/fs/cgroup",
+    "--hostname=ansible-dev-tools",
+    "--network=host",
+    "--privileged",
+    "--add-host",
+    "aap25.containersarelinux.net:192.168.67.8",
+    "-v",
+    "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro"
+  ],
+  "env": {
+    "ANSIBLE_CONFIG": "/workspaces/aap25/ansible.cfg"
+  },
+  "onCreateCommand": "/bin/bash /workspaces/aap25/.devcontainer/devcontainer-init.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["redhat.ansible"]
     }
   }
+}
  
