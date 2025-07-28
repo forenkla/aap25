@@ -24,7 +24,9 @@
     "--add-host",
     "aap25.containersarelinux.net:192.168.67.8",
     "-v",
-    "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro"
+    "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro",
+    "-v",
+    "${env:HOME}/.ansible/ansible.cfg:/workspaces/aap25/ansible.cfg:ro"
   ],
   "env": {
     "ANSIBLE_CONFIG": "/workspaces/aap25/ansible.cfg"
