@@ -3,3 +3,4 @@ collections/ansible_collections/*
 !collections/ansible_collections/jboivie/
 !collections/ansible_collections/jboivie/**
 ansible.cfg
+ansible.cfg
