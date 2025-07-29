@@ -1,0 +1,17 @@
+- name: Configure private automation hub after installation
+  hosts: aap25.containersarelinux.net
+  gather_facts: false
+
+  tasks:
+    - name: Fix Podman upload
+      ansible.builtin.lineinfile:
+        path: /home/jboivie/aap/gateway/nginx/etc/nginx.conf
+        regexp: '.*client_max_body_size 5m;'
+        line: '        client_max_body_size 100m;'
+      become: true
+
+    - name: Restart service nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+      become: true

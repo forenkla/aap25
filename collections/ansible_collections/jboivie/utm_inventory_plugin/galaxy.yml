@@ -6,3 +6,4 @@ authors:
   - Jens Boivie
 description: UTM dynamic inventory plugin for Ansible
 license: MIT
+repository: https://github.com/forenkla/aap25

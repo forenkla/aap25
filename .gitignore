@@ -3,3 +3,6 @@ collections/ansible_collections/*
 !collections/ansible_collections/jboivie/
 !collections/ansible_collections/jboivie/**
 ansible.cfg
+ee/aap_configurator/files/ansible.cfg
+collections/ansible_collections/jboivie/utm_inventory_plugin/jboivie-utm_inventory_plugin-1.0.0.tar.gz
+ee/aap_configurator/context/
