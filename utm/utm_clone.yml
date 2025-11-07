@@ -8,6 +8,7 @@
     new_vm_name: ""
     managed_by_ansible: "No"  # This will be overridden by the survey
     delete_lock: "No"         # Set via survey
+    utm_host: ""
 
   tasks:
     - name: Determine suffix based on flags
@@ -23,7 +24,7 @@
 
     - name: Request clone from macOS UTM daemon
       uri:
-        url: "http://192.168.67.1:5050/clone"
+        url: "http://{{ utm_host }}:5050/clone"
         method: POST
         body_format: json
         body:

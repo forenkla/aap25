@@ -1,0 +1,33 @@
+organisations:
+  - name: Cloud
+    teams:
+      - Database
+      - Web
+
+  - name: Dogs
+    teams: []
+
+users:
+  - user_name: "d96-jbo"
+    user_firstname: "Jens"
+    user_lastname: "Boivie"
+    user_type: "Administrator"
+    user_org: "Cloud"
+    user_teams:
+      - Database
+      - Web
+
+  - user_name: "blundberg"
+    user_firstname: "Bill"
+    user_lastname: "Lundberg"
+    user_type: "Auditor"
+    user_org: "Cloud"
+    user_teams:
+      - Web
+
+  - user_name: "eboivie"
+    user_firstname: "Elton"
+    user_lastname: "Boivie"
+    user_type: "Administrator"
+    user_org: "Dogs"
+    user_teams: []

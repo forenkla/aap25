@@ -1,0 +1,22 @@
+---
+# vars-vault.yml (will be vaulted)
+
+# === Bastion connection ===
+bastion_host: "bastion.n5zns.sandbox2879.opentlc.com"
+bastion_user: "lab-user"
+bastion_password: "vK0phpQM1buf"
+
+# OpenShift / cluster access
+kubeconfig_path: "/home/lab-user/.kube/config"   # since bastion is already logged in
+ocp_namespace: "self-service-portal"
+
+# AAP / Portal integration secrets
+aap_url: "https://aap25.containersarelinux.net"
+aap_oauth_client_id: "jVPwJwkD6Ps4e2ErgJZL82BsROMFhd3S4UNQkdl4"
+aap_oauth_client_secret: >-
+  ubg7RYkUSYvrKBIR0Cvlng2UnYd9NvcRNM5Dxeh1DogOmnw0Mv7PkEWqRoV5S9Ooc5xryEQaAOlAJYx5nDcDnehWSksoPjppSb0pkPrH44g3DyxIGX29lZX8H6P6Ap8a
+aap_api_token: "MF6W4qrrxaGRlo3jhiIzRaHydMOnJI"
+
+# (optional, for later steps)
+scm_github_pat: "REPLACE_WITH_GITHUB_PAT"
+scm_gitlab_pat: "REPLACE_WITH_GITLAB_PAT"

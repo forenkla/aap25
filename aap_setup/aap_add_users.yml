@@ -1,0 +1,72 @@
+- name: Configure AAP organizations, teams, and users
+  hosts: all
+  gather_facts: false
+
+  vars_files:
+    - aap_users.yml
+
+  vars:
+ 
+
+  collections:
+    - ansible.platform
+    - ansible.controller
+
+  tasks:
+
+    - name: Create organizations
+      ansible.platform.organization:
+        name: "{{ item.name }}"
+        description: "{{ item.description | default('') }}"
+        state: present
+        gateway_hostname: "{{ inventory_hostname }}"
+        gateway_username: admin
+        gateway_password: "{{ simple_password }}"
+        gateway_validate_certs: false
+      loop: "{{ organisations }}"
+
+    - name: Create teams for each organization
+      ansible.platform.team:
+        name: "{{ team_name }}"
+        organization: "{{ org.name }}"
+        gateway_hostname: "{{ inventory_hostname }}"
+        gateway_username: admin
+        gateway_password: "{{ simple_password }}"
+        gateway_validate_certs: false
+        state: present
+      loop: "{{ organisations | subelements('teams', skip_missing=True) }}"
+      loop_control:
+        loop_var: org_team_pair
+      vars:
+        org: "{{ org_team_pair.0 }}"
+        team_name: "{{ org_team_pair.1 }}"
+
+    - name: Create users
+      ansible.platform.user:
+        gateway_hostname: "{{ inventory_hostname }}"
+        gateway_username: admin
+        gateway_password: "{{ simple_password }}"
+        gateway_validate_certs: false
+        username: "{{ user.user_name }}"
+        first_name: "{{ user.user_firstname }}"
+        last_name: "{{ user.user_lastname }}"
+        is_superuser: "{{ user.user_type == 'Administrator' }}"
+        password: "{{ simple_password }}"  # Replace with proper logic
+        state: present
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+    - name: Assign users to organization
+      ansible.platform.role_user_assignment:
+        gateway_hostname: "{{ inventory_hostname }}"
+        gateway_username: admin
+        gateway_password: "{{ simple_password }}"
+        gateway_validate_certs: false
+        user: "{{ user.user_name }}"
+        role_definition: "{{ 'Auditor' if user.user_type == 'Auditor' else 'Member' }}"
+        object_ids: ["{{ user.user_org }}"]
+        state: present
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user

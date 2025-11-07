@@ -1,0 +1,19 @@
+---
+- name: Persistent single-node Vault (Raft) + seed secrets
+  hosts: hashi-vault.containersarelinux.net
+  become: true
+  vars:
+    vault_bind_ip: "127.0.0.1"          # for safety; change to host IP only if needed
+    vault_api_port: 8200
+    vault_cluster_port: 8201
+    vault_data_dir: "/opt/vault/data"
+    vault_config_dir: "/etc/vault.d"
+    vault_user: "vault"
+    vault_group: "vault"
+    tls_enabled: false
+    tls_cert_file: "/home/jboivie/certs/fullchain.pem"
+    tls_key_file:  "/home/jboivie/certs/privkey.pem"
+    vault_addr_scheme: "{{ 'https' if tls_enabled else 'http' }}"
+    vault_hostname: "{{ ansible_fqdn | default(inventory_hostname) }}"
+    vault_init_json: "/root/vault_init.json"
+    kv_mount: "secret"

@@ -18,7 +18,8 @@
 
   vars:
     # Assumes all hostnames are valid and exist in inventory
-    delete_url: "http://192.168.67.1:5050/delete"
+    utm_host: ""
+    delete_url: "http://{{ utm_host }}:5050/delete"
     vm_suffix: "_m"
 
   tasks:

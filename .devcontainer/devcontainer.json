@@ -26,7 +26,13 @@
     "-v",
     "${env:HOME}/.config/containers/auth.json:/run/containers/containers-auth.json:ro",
     "-v",
-    "${env:HOME}/.ansible/ansible.cfg:/workspaces/aap25/ansible.cfg:ro"
+    "${env:HOME}/.ansible/ansible.cfg:/workspaces/aap25/ansible.cfg:ro",
+    "-v",
+    "${env:HOME}/.ssh:/root/.ssh:ro",
+    "-v",
+    "${env:HOME}/.ansible/vault.yml:/workspaces/aap25/vault.yml:ro",
+    "-v",
+    "${env:HOME}/.ansible/vault_pass.txt:/workspaces/aap25/vault_pass.txt:ro"
   ],
   "env": {
     "ANSIBLE_CONFIG": "/workspaces/aap25/ansible.cfg"

@@ -1,0 +1,30 @@
+---
+- name: Deploy prerequisites for Ansible Self-Service Automation Portal (steps 1-3)
+  hosts: bastion
+  gather_facts: false
+
+  vars:
+    # ===== OpenShift / cluster access =====
+    # This is where the bastion already has oc logged in.
+    # If you instead want to log in non-interactively, provide an API URL and token.
+    ocp_api_url: "https://api.tem.cluster.example.com:6443"     # dummy
+    ocp_username: "lab-user"
+    ocp_password: "vK0phpQM1buf"
+    ocp_namespace: "self-service-portal"                         # project/namespace to create for the portal
+
+    # Path on bastion where we will write a kubeconfig we can use with kubernetes.core.*
+    kubeconfig_path: "/home/lab-user/self-service-kubeconfig.yml"
+
+    # ===== AAP connection info (used to build secrets-rhaap-portal) =====
+    aap_url: "https://aap25.containersarelinux.net"              # aap-host-url
+    aap_oauth_client_id: "jVPwJwkD6Ps4e2ErgJZL82BsROMFhd3S4UNQkdl4"
+    aap_oauth_client_secret: >-
+      ubg7RYkUSYvrKBIR0Cvlng2UnYd9NvcRNM5Dxeh1DogOmnw0Mv7PkEWqRoV5S9Ooc5xryEQaAOlAJYx5nDcDnehWSksoPjppSb0pkPrH44g3DyxIGX29lZX8H6P6Ap8a
+    # This must be an API token generated for an AAP admin user with "Read" scope,
+    # as described in Chapter 3.4.  [oai_citation:5‡Red_Hat_Ansible_Automation_Platform-2.6-Installing_self-service_automation_portal-en-US copy.pdf](sediment://file_0000000007f061f593198fe949dd861f)
+    aap_api_token: "REPLACE_ME_WITH_ADMIN_READ_TOKEN"
+
+  collections:
+    - kubernetes.core
+
+  tasks:

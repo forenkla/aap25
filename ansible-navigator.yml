@@ -8,9 +8,9 @@ ansible-navigator:
   execution-environment:
     container-engine: podman
     enabled: true
-    image: aap25.containersarelinux.net/ansible-automation-platform-25/ee-supported-rhel9
+    image: aap25.containersarelinux.net/ansible-automation-platform-25/aap-configurator
   logging:
     append: true
     level: info
   playbook-artifact:
-    enable: true
+    enable: false

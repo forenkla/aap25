@@ -5,4 +5,11 @@ collections/ansible_collections/*
 ansible.cfg
 ee/aap_configurator/files/ansible.cfg
 collections/ansible_collections/jboivie/utm_inventory_plugin/jboivie-utm_inventory_plugin-1.0.0.tar.gz
+collections/ansible_collections/jboivie/utm_inventory_plugin/jboivie-utm_inventory_plugin-1.0.1.tar.gz
 ee/aap_configurator/context/
+vault_pass.txt
+vault.yml
+aap_setup/files/manifest_aap_config_20250730T131516Z.zip
+aap_setup/.DS_Store
+aap_setup/files/.DS_Store
+.DS_Store

@@ -9,9 +9,10 @@
 
   tasks:
     - name: Add line to /etc/hosts for FQDN
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/hosts
-        line: "{{ my_ip }} {{ my_fqdn }} {{ my_name }}"
+        line: "{{ ansible_host }} {{ inventory_hostname }} {{ inventory_hostname.split('.')[0] }}"
+        state: present
 
     - name: Install ansible-core
       ansible.builtin.dnf:
@@ -28,45 +29,47 @@
           - tree
         state: present
 
-    # - name: Extract the AAP bundle
-    #   ansible.builtin.unarchive:
-    #     src: '{{ aap_installer_tar }}'
-    #     dest: '{{ home_dir }}'
-    #     remote_src: true
+    - name: Extract the AAP bundle
+      ansible.builtin.unarchive:
+        src: '{{ aap_installer_tar }}'
+        dest: '{{ home_dir }}'
+        remote_src: true
 
-    # - name: Template the AAP inventory file
-    #   ansible.builtin.template:
-    #     src: "inventory-tls-new.j2"
-    #     dest: "{{ aap_installer_dir }}/inventory"
-    #     mode: '0644'
-    #     owner: jboivie
-    #     group: jboivie
+    - name: Template the AAP inventory file
+      ansible.builtin.template:
+        src: "inventory-tls-new.j2"
+        dest: "{{ aap_installer_dir }}/inventory"
+        mode: '0644'
+        owner: jboivie
+        group: jboivie
 
-    # - name: Run the AAP installer (with stdout shown after completion)
-    #   ansible.builtin.shell: |
-    #     ansible-playbook -i inventory ansible.containerized_installer.install
-    #   args:
-    #     chdir: "{{ aap_installer_dir }}"
-    #   become: false
-    #   remote_user: jboivie
-    #   register: result
-    #   ignore_errors: true
+    - name: Run the AAP installer (with stdout shown after completion)
+      ansible.builtin.shell: |
+        ansible-playbook -i inventory ansible.containerized_installer.install
+      args:
+        chdir: "{{ aap_installer_dir }}"
+      become: false
+      remote_user: jboivie
+      register: result
+      ignore_errors: true
 
-    # - name: Show installer output
-    #   ansible.builtin.debug:
-    #     var: result.stdout_lines
+    - name: Show installer output
+      ansible.builtin.debug:
+        var: result.stdout_lines
 
     - name: Apply AAP license
-      infra.aap_configuration.controller_license:
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.controller_license
+      vars:
         aap_validate_certs: false
-        aap_hostname: controller.example.com
+        aap_hostname: "{{ inventory_hostname }}"
         aap_username: admin
         aap_password: "{{ simple_password }}"
-        redhat_subscription_username: "{{ registry_username }}"
-        redhat_subscription_password: "{{ registry_password }}"
+        # redhat_subscription_username: "{{ registry_username }}"
+        # redhat_subscription_password: "{{ registry_password }}"
+        eula_accepted: true
+        force: true
         controller_license:
-          use_lookup: true
-          filters:
-            product_name: "Red Hat Ansible Automation Platform"
-            support_level: "Self-Support"
+          manifest_file: "manifest_aap_config_20250730T131516Z.zip"
         state: present
+

@@ -1,0 +1,7 @@
+all:
+  hosts:
+    bastion:
+      ansible_host: "{{ bastion_host }}"
+      ansible_user: "{{ bastion_user }}"
+      ansible_password: "{{ bastion_password }}"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
