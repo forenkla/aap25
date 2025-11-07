@@ -1,2 +1,2 @@
 plugin: jboivie.utm_inventory_plugin.utm
-url: "http://{{ utm_host }}:5050/inventory"
+url: "http://192.168.1.173:5050/inventory"
