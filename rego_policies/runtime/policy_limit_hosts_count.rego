@@ -7,7 +7,7 @@ import rego.v1
 #
 
 # Hard cap on how many hosts a job may target
-max_hosts := 1
+max_hosts := 2
 
 #
 # DEFAULT RESULT: ALLOW
