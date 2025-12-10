@@ -6,43 +6,35 @@ import rego.v1
 # CONFIG
 #
 
+# Hard cap on how many hosts a job may target
 max_hosts := 50
 
 #
-# CORE LOGIC
+# DEFAULT RESULT: ALLOW
 #
 
-too_many_hosts if {
-    input.hosts_count > max_hosts
-}
-
-violations := [msg] if {
-    too_many_hosts
-    msg := sprintf(
-        "Job targets %v hosts, which exceeds the limit of %v hosts",
-        [input.hosts_count, max_hosts],
-    )
-}
-
-violations := [] if {
-    not too_many_hosts
-}
-
-#
-# ENTRYPOINT
-#
-
-# AAP will query aap_policy_examples/allowed
-allowed := {
+default policy_limit_hosts_count = {
     "allowed": true,
     "violations": [],
-} if {
-    not too_many_hosts
 }
 
-allowed := {
-    "allowed": false,
-    "violations": violations,
-} if {
-    too_many_hosts
+#
+# OVERRIDE WHEN HOST CAP IS EXCEEDED
+#
+
+policy_limit_hosts_count = result if {
+    # hosts_count may or may not be present – be defensive
+    hosts_count := object.get(input, ["hosts_count"], 0)
+
+    hosts_count > max_hosts
+
+    result := {
+        "allowed": false,
+        "violations": [
+            sprintf(
+                "Job targets %v hosts, which exceeds the limit of %v hosts",
+                [hosts_count, max_hosts],
+            ),
+        ],
+    }
 }
