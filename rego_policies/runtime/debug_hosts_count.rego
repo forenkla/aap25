@@ -4,7 +4,7 @@ import rego.v1
 
 # DEBUG POLICY: always deny and print out what AAP is actually sending
 
-policy_limit_hosts_count = result if {
+debug_hosts_count = result if {
     hosts_count := object.get(input, ["hosts_count"], "MISSING")
     inv_total   := object.get(input, ["inventory", "total_hosts"], "MISSING")
     limit       := object.get(input, ["limit"], "MISSING")
