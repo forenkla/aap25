@@ -1,4 +1,4 @@
-package aap_policy_examples
+package opa_demo_rules
 
 import rego.v1
 
