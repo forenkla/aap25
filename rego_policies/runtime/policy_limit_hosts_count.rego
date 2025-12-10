@@ -24,7 +24,7 @@ default policy_limit_hosts_count = {
 
 policy_limit_hosts_count = result if {
     # hosts_count may or may not be present – be defensive
-    hosts_count := input.hosts_count
+    hosts_count := input.inventory.total_hosts
 
     hosts_count > max_hosts
 
