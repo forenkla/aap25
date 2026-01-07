@@ -1,0 +1,20 @@
+---
+# cspell: disable=devspaces
+schemaVersion: 2.2.2
+metadata:
+  name: ansible-devspaces-devfile
+components:
+  - name: tooling-container
+    container:
+      image: registry.redhat.io/ansible-automation-platform-tech-preview/ansible-devspaces-rhel9:latest
+      memoryRequest: 256M
+      memoryLimit: 6Gi
+      cpuRequest: 250m
+      cpuLimit: 2000m
+      args: ["tail", "-f", "/dev/null"]
+      env:
+        - name: "ANSIBLE_COLLECTIONS_PATH"
+          value: "~/.ansible/collections:/usr/share/ansible/collections"
+        - name: KUBEDOCK_ENABLED
+          value: "true"
+          
