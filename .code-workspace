@@ -5,10 +5,16 @@
 	},
 	"extensions": {
 		"recommendations": [
-                        "redhat.ansible",
-                        "redhat.vscode-yaml",
-                        "redhat.vscode-openshift-connector",
-                        "eamodio.gitlens",
+			"redhat.ansible",
+			"redhat.vscode-yaml",
+			"redhat.vscode-openshift-connector",
+			"eamodio.gitlens"
 		]
 	},
+	"folders": [
+		{
+			"name": "aap25",
+			"path": "/projects/aap25"
+		}
+	]
 }
