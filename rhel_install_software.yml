@@ -1,20 +1,13 @@
 ---
-- name: Install software on RHEL
+- name: Install latest version of software on RHEL
   hosts: all
   become: true
 
+
   tasks:
-  - name: Ensure the httpd package is installed
+  - name: Install the thing
     ansible.builtin.package:
-      name: httpd
-      state: present
+      name: {{ software_name }}
+      state: latest
 
-  - name: Create the index.html file
-    ansible.builtin.template:
-      src: files/index.html
-      dest: /var/www/html/
 
-  - name: Start the httpd service if needed
-    ansible.builtin.service:
-      name: httpd
-      state: started
