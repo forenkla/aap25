@@ -7,7 +7,7 @@
   tasks:
   - name: Install the thing
     ansible.builtin.package:
-      name: {{ software_name }}
+      name: "{{ software_name }}"
       state: latest
 
 

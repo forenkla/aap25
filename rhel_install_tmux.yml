@@ -1,0 +1,10 @@
+---
+- name: Install tmux on RHEL
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Install tmux
+    ansible.builtin.package:
+      name: tmux
+      state: latest
