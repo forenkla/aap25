@@ -1,0 +1,12 @@
+---
+- name: Register RHEL VM with Red Hat
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Register system with Red Hat
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ cred_username }}"
+        password: "{{ cred_password }}"
+        auto_attach: true
