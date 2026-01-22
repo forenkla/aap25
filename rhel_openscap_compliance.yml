@@ -8,7 +8,7 @@
       - openscap-scanner
       - openscap-utils
       - scap-security-guide
-    compliance_profile: pci-dss
+    compliance_profile: ospp
     # ospp
     # install httpd and use it to host compliance report
     use_httpd: true
