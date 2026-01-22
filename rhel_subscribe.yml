@@ -5,7 +5,7 @@
 
   tasks:
     - name: Register system with Red Hat
-      community.general.redhat_subscription:
+      redhat.rhel_system_roles.redhat_subscription:
         state: present
         username: "{{ cred_username }}"
         password: "{{ cred_password }}"
