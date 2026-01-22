@@ -9,4 +9,3 @@
         state: present
         username: "{{ cred_username }}"
         password: "{{ cred_password }}"
-        auto_attach: true
